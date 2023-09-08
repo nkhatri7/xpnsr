@@ -1,32 +1,77 @@
-import { FC } from "react";
-import { StyleSheet, View } from "react-native";
+import { FC, useState } from "react";
+import { View } from "react-native";
 import { LoginScreenProps } from "../types/navigation";
+import { useTheme } from "../context/ThemeContext";
 import AuthScreen from "../components/auth/AuthScreen";
 import TextInput from "../components/ui/form/TextInput";
-import { useTheme } from "../context/ThemeContext";
 import Button from "../components/ui/form/Button";
 import Link from "../components/ui/text/Link";
+import FormContainer from "../components/auth/FormContainer";
+import { AuthFormInputData } from "../types/auth";
+import { DEFAULT_INPUT_DATA } from "../constants/auth";
 
 const LoginScreen: FC<LoginScreenProps> = ({ navigation }) => {
   const { theme } = useTheme();
 
+  const [emailData, setEmailData] = useState<AuthFormInputData>(
+    DEFAULT_INPUT_DATA
+  );
+  const [passwordData, setPasswordData] = useState<AuthFormInputData>(
+    DEFAULT_INPUT_DATA
+  );
+
+  const handleLogin = async () => {
+    const isDataValid = validateData();
+    if (isDataValid) {
+      // Sign user in
+    }
+  };
+
+  const validateData = (): boolean => {
+    let isDataValid = true;
+    if (!emailData.value) {
+      setEmailData({ ...emailData, errorMessage: "Email cannot be empty" });
+      isDataValid = false;
+    }
+    if (!passwordData.value) {
+      setPasswordData({
+        ...passwordData,
+        errorMessage: "Password cannot be empty"
+      });
+      isDataValid = false;
+    }
+    return isDataValid;
+  };
+
   return (
     <AuthScreen title="Sign in">
-      <View style={styles.formContainer}>
+      <FormContainer>
         <TextInput
           inputMode="email"
           placeholder="Email"
           autoCorrect={false}
           autoComplete="email"
+          value={emailData.value}
+          onChangeText={(text: string) => setEmailData({
+            ...emailData,
+            value: text.trim(),
+          })}
+          errorMessage={emailData.errorMessage}
         />
         <TextInput
           inputMode="text"
           placeholder="Password"
           autoCorrect={false}
           secureTextEntry={true}
+          value={passwordData.value}
+          onChangeText={(text: string) => setPasswordData({
+            ...passwordData,
+            value: text.trim(),
+          })}
+          errorMessage={passwordData.errorMessage}
         />
         <View style={{ marginTop: 15 }}>
-          <Button>Sign in</Button>
+          <Button onPress={handleLogin}>Sign in</Button>
         </View>
         <Link
           onPress={() => navigation.replace("Register")}
@@ -34,19 +79,9 @@ const LoginScreen: FC<LoginScreenProps> = ({ navigation }) => {
         >
           Don't have an account? Sign Up
         </Link>
-      </View>
+      </FormContainer>
     </AuthScreen>
   );
 };
 
 export default LoginScreen;
-
-const styles = StyleSheet.create({
-  formContainer: {
-    alignItems: "center",
-    width: "100%",
-    maxWidth: 300,
-    rowGap: 10,
-    marginTop: 10,
-  },
-});
