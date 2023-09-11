@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { RootTabsParamList } from "../types/navigation";
+import { colourVariables } from "../constants/colours";
 import Home from "../screens/Home";
 import TabIcon from "../components/tabs/TabIcon";
-import { colourVariables } from "../constants/colours";
 
 const RootTabs: FC = () => {
   const Tab = createBottomTabNavigator<RootTabsParamList>();
@@ -12,6 +12,7 @@ const RootTabs: FC = () => {
     <Tab.Navigator
       screenOptions={{
         tabBarActiveTintColor: colourVariables.primary,
+        headerShown: false,
       }}
     >
       <Tab.Screen
