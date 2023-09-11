@@ -36,3 +36,6 @@ yarn-error.*
 
 # Android
 .idea/
+
+# Environment Variables
+.env

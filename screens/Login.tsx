@@ -9,6 +9,7 @@ import Link from "../components/ui/text/Link";
 import FormContainer from "../components/auth/FormContainer";
 import { AuthFormInputData } from "../types/auth";
 import { DEFAULT_INPUT_DATA } from "../constants/auth";
+import { signInUser } from "../utils/auth";
 
 const LoginScreen: FC<LoginScreenProps> = ({ navigation }) => {
   const { theme } = useTheme();
@@ -23,7 +24,8 @@ const LoginScreen: FC<LoginScreenProps> = ({ navigation }) => {
   const handleLogin = async () => {
     const isDataValid = validateData();
     if (isDataValid) {
-      // Sign user in
+      const user = await signInUser(emailData.value, passwordData.value);
+      console.log(user);
     }
   };
 

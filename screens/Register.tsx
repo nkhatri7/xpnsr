@@ -2,13 +2,14 @@ import { View } from "react-native";
 import { FC, useEffect, useState } from "react";
 import { RegisterScreenProps } from "../types/navigation";
 import { useTheme } from "../context/ThemeContext";
+import { registerUser } from "../utils/auth";
+import { DEFAULT_INPUT_DATA } from "../constants/auth";
+import { AuthFormInputData } from "../types/auth";
 import TextInput from "../components/ui/form/TextInput";
 import Button from "../components/ui/form/Button";
 import Link from "../components/ui/text/Link";
 import AuthScreen from "../components/auth/AuthScreen";
 import FormContainer from "../components/auth/FormContainer";
-import { AuthFormInputData } from "../types/auth";
-import { DEFAULT_INPUT_DATA } from "../constants/auth";
 
 const RegisterScreen: FC<RegisterScreenProps> = ({ navigation }) => {
   const { theme } = useTheme();
@@ -61,6 +62,12 @@ const RegisterScreen: FC<RegisterScreenProps> = ({ navigation }) => {
     const isDataValid = validateData();
     if (isDataValid) {
       // Register user
+      const user = await registerUser(
+        nameData.value,
+        emailData.value,
+        passwordData.value
+      );
+      console.log(user);
     }
   };
 
@@ -81,7 +88,7 @@ const RegisterScreen: FC<RegisterScreenProps> = ({ navigation }) => {
       });
       isDataValid = false;
     }
-    if (confirmedPasswordData.value !== passwordData.errorMessage) {
+    if (confirmedPasswordData.value !== passwordData.value) {
       setConfirmedPasswordData({
         ...confirmedPasswordData,
         errorMessage: "Passwords must match",
