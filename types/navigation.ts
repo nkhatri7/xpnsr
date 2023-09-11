@@ -14,3 +14,7 @@ export type LoginScreenProps = NativeStackScreenProps<
   RootStackParamList,
   "Login"
 >;
+
+export type RootTabsParamList = {
+  Home: undefined;
+}

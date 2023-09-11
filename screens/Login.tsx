@@ -10,9 +10,11 @@ import FormContainer from "../components/auth/FormContainer";
 import { AuthFormInputData } from "../types/auth";
 import { DEFAULT_INPUT_DATA } from "../constants/auth";
 import { signInUser } from "../utils/auth";
+import { useAuth } from "../context/AuthContext";
 
 const LoginScreen: FC<LoginScreenProps> = ({ navigation }) => {
   const { theme } = useTheme();
+  const { setUser } = useAuth();
 
   const [emailData, setEmailData] = useState<AuthFormInputData>(
     DEFAULT_INPUT_DATA
@@ -25,7 +27,7 @@ const LoginScreen: FC<LoginScreenProps> = ({ navigation }) => {
     const isDataValid = validateData();
     if (isDataValid) {
       const user = await signInUser(emailData.value, passwordData.value);
-      console.log(user);
+      setUser(user);
     }
   };
 
