@@ -16,15 +16,19 @@ const RegisterScreen: FC<RegisterScreenProps> = ({ navigation }) => {
   const { theme } = useTheme();
   const { setUser } = useAuth();
 
-  const [nameData, setNameData] = useState<FormInputData>(DEFAULT_INPUT_DATA);
-  const [emailData, setEmailData] = useState<FormInputData>(DEFAULT_INPUT_DATA);
-  const [passwordData, setPasswordData] = useState<FormInputData>(
+  const [nameData, setNameData] = useState<FormInputData<string>>(
+    DEFAULT_INPUT_DATA
+  );
+  const [emailData, setEmailData] = useState<FormInputData<string>>(
+    DEFAULT_INPUT_DATA
+  );
+  const [passwordData, setPasswordData] = useState<FormInputData<string>>(
     DEFAULT_INPUT_DATA
   );
   const [
     confirmedPasswordData,
     setConfirmedPasswordData
-  ] = useState<FormInputData>(DEFAULT_INPUT_DATA);
+  ] = useState<FormInputData<string>>(DEFAULT_INPUT_DATA);
 
 
   useEffect(() => {

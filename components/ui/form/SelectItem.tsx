@@ -5,9 +5,9 @@ import { useTheme } from "../../../context/ThemeContext";
 import Text from "../text/Text";
 
 interface Props {
-  value: string | number;
-  selectedValue: string | number;
-  onPress: (value: string | number) => void;
+  value: any;
+  selectedValue: any;
+  onPress: (value: any) => void;
 }
 
 const SelectItem: FC<Props> = ({ value, selectedValue, onPress }) => {

@@ -13,10 +13,10 @@ import Text from "../text/Text";
 import SelectItem from "./SelectItem";
 
 interface Props {
-  data: string[] | number[];
+  data: any[];
   placeholder: string;
-  selectedValue: string | number;
-  setSelected: (value: string | number) => void;
+  selectedValue: any;
+  setSelected: (value: any) => void;
   errorMessage: string;
 }
 
@@ -35,7 +35,7 @@ const Select: FC<Props> = ({
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
   }, [isSelectOpen]);
 
-  const handleItemSelect = (value: string | number) => {
+  const handleItemSelect = (value: any) => {
     setSelected(value);
     setSelectOpen(false);
   };

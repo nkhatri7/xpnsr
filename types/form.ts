@@ -1,4 +1,4 @@
-export interface FormInputData {
-  value: any;
+export interface FormInputData<T> {
+  value: T;
   errorMessage: string;
 }

@@ -16,8 +16,10 @@ const LoginScreen: FC<LoginScreenProps> = ({ navigation }) => {
   const { theme } = useTheme();
   const { setUser } = useAuth();
 
-  const [emailData, setEmailData] = useState<FormInputData>(DEFAULT_INPUT_DATA);
-  const [passwordData, setPasswordData] = useState<FormInputData>(
+  const [emailData, setEmailData] = useState<FormInputData<string>>(
+    DEFAULT_INPUT_DATA
+  );
+  const [passwordData, setPasswordData] = useState<FormInputData<string>>(
     DEFAULT_INPUT_DATA
   );
 

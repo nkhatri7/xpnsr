@@ -20,7 +20,7 @@ const SelectArrow: FC<Props> = ({ isSelectOpen }) => {
   const rotateArrowUp = () => {
     Animated.timing(rotateValue, {
       toValue: 1,
-      duration: 300,
+      duration: 150,
       easing: Easing.ease,
       useNativeDriver: true,
     }).start();
@@ -29,7 +29,7 @@ const SelectArrow: FC<Props> = ({ isSelectOpen }) => {
   const rotateArrowDown = () => {
     Animated.timing(rotateValue, {
       toValue: 0,
-      duration: 300,
+      duration: 150,
       easing: Easing.ease,
       useNativeDriver: true,
     }).start();

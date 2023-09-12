@@ -8,15 +8,19 @@ import Select from "../ui/form/Select";
 import DateInput from "../ui/form/DateInput";
 import Button from "../ui/common/Button";
 
-
 const expenseCategories: string[] = Object.values(ExpenseCategory);
 
 const AddExpenseForm: FC = () => {
-  const [nameData, setNameData] = useState<FormInputData>(DEFAULT_INPUT_DATA);
-  const [amountData, setAmountData] = useState<FormInputData>(
+  const [nameData, setNameData] = useState<FormInputData<string>>(
     DEFAULT_INPUT_DATA
   );
-  const [categoryData, setCategoryData] = useState<FormInputData>({
+  const [amountData, setAmountData] = useState<FormInputData<string>>(
+    DEFAULT_INPUT_DATA
+  );
+  const [
+    categoryData,
+    setCategoryData
+  ] = useState<FormInputData<string | null>>({
     value: null,
     errorMessage: "",
   });
