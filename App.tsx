@@ -1,18 +1,15 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as SplashScreen from "expo-splash-screen";
-import RegisterScreen from "./screens/Register";
-import { RootStackParamList } from "./types/navigation";
 import { NavigationContainer } from "@react-navigation/native";
-import { ThemeProvider, useTheme } from "./context/ThemeContext";
+import { ThemeProvider } from "./context/ThemeContext";
+import { AuthProvider } from "./context/AuthContext";
 import { useFonts } from "expo-font";
 import {
   Roboto_400Regular,
   Roboto_500Medium,
   Roboto_700Bold,
 } from "@expo-google-fonts/roboto";
-import { FC } from "react";
-import { StatusBar } from "expo-status-bar";
-import LoginScreen from "./screens/Login";
+import { useEffect } from "react";
+import Navigator from "./navigation/Navigator";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -23,43 +20,23 @@ export default function App() {
     "Roboto-Bold": Roboto_700Bold,
   });
 
-  const hideSplashScreen = async () => await SplashScreen.hideAsync();
+  useEffect(() => {
+    if (fontsLoaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
 
-  if (fontsLoaded) {
-    hideSplashScreen();
-  } else {
+  if (!fontsLoaded) {
     return null;
   }
 
   return (
     <NavigationContainer>
-      <ThemeProvider>
-        <Navigator />
-      </ThemeProvider>
+      <AuthProvider>
+        <ThemeProvider>
+          <Navigator />
+        </ThemeProvider>
+      </AuthProvider>
     </NavigationContainer>
   );
 }
-
-const Navigator: FC = () => {
-  const Stack = createNativeStackNavigator<RootStackParamList>();
-
-  const { isDarkMode } = useTheme();
-
-  return (
-    <>
-      <StatusBar style={isDarkMode ? "light" : "dark"} />
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Register"
-          component={RegisterScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{ headerShown: false }}
-        />
-      </Stack.Navigator>
-    </>
-  );
-};

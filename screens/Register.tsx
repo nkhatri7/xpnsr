@@ -10,9 +10,11 @@ import Button from "../components/ui/form/Button";
 import Link from "../components/ui/text/Link";
 import AuthScreen from "../components/auth/AuthScreen";
 import FormContainer from "../components/auth/FormContainer";
+import { useAuth } from "../context/AuthContext";
 
 const RegisterScreen: FC<RegisterScreenProps> = ({ navigation }) => {
   const { theme } = useTheme();
+  const { setUser } = useAuth();
 
   const [nameData, setNameData] = useState<AuthFormInputData>(
     DEFAULT_INPUT_DATA
@@ -67,7 +69,7 @@ const RegisterScreen: FC<RegisterScreenProps> = ({ navigation }) => {
         emailData.value,
         passwordData.value
       );
-      console.log(user);
+      setUser(user);
     }
   };
 

@@ -1,11 +1,11 @@
 import { auth } from "../firebase/config";
 import {
+  User,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateCurrentUser,
   updateProfile,
 } from "firebase/auth";
-import { User } from "../types/auth";
 
 /**
  * Creates a user account in the firebase project with the given email and
@@ -18,28 +18,21 @@ export const registerUser = async (
   name: string,
   email: string,
   password: string
-): Promise<User | undefined> => {
+): Promise<User | null> => {
   try {
     const userCredentials = await createUserWithEmailAndPassword(
       auth,
       email,
       password,
     );
-    const token = await userCredentials.user.getIdToken();
     await updateProfile(userCredentials.user, {
       displayName: name,
     });
     await updateCurrentUser(auth, userCredentials.user);
-    return {
-      uid: userCredentials.user.uid,
-      name,
-      email,
-      token,
-      refreshToken: userCredentials.user.refreshToken,
-    };
+    return userCredentials.user;
   } catch (e) {
     console.log(e);
-    return undefined;
+    return null;
   }
 };
 
@@ -54,24 +47,17 @@ export const registerUser = async (
 export const signInUser = async (
   email: string,
   password: string,
-): Promise<User | string> => {
+): Promise<User | null> => {
   try {
     const userCredentials = await signInWithEmailAndPassword(
       auth,
       email,
       password,
     );
-    const token = await userCredentials.user.getIdToken();
     await updateCurrentUser(auth, userCredentials.user);
-    return {
-      uid: userCredentials.user.uid,
-      name: userCredentials.user.displayName ?? "",
-      email,
-      token,
-      refreshToken: userCredentials.user.refreshToken,
-    };
+    return userCredentials.user;
   } catch (e) {
     console.log(e);
-    return "";
+    return null;
   }
 };
