@@ -1,14 +1,14 @@
 import { StyleSheet, View } from "react-native";
-import ScreenWrapper from "../components/layout/ScreenWrapper";
-import Heading from "../components/ui/text/Heading";
+import { FC, useMemo } from "react";
 import { useAuth } from "../context/AuthContext";
 import { User } from "firebase/auth";
 import { getCurrentMonthName } from "../utils/date";
 import { Theme } from "../constants/colours";
 import { useTheme } from "../context/ThemeContext";
-import { useMemo } from "react";
+import ScreenWrapper from "../components/ui/layout/ScreenWrapper";
+import Heading from "../components/ui/text/Heading";
 
-const Home = () => {
+const HomeScreen: FC = () => {
   const { user } = useAuth();
   const { theme } = useTheme();
   const styles = useMemo(() => styling(theme), [theme]);
@@ -30,7 +30,7 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomeScreen;
 
 const styling = (theme: Theme) => StyleSheet.create({
   container: {

@@ -2,33 +2,29 @@ import { View } from "react-native";
 import { FC, useEffect, useState } from "react";
 import { RegisterScreenProps } from "../types/navigation";
 import { useTheme } from "../context/ThemeContext";
+import { useAuth } from "../context/AuthContext";
 import { registerUser } from "../utils/auth";
-import { DEFAULT_INPUT_DATA } from "../constants/auth";
-import { AuthFormInputData } from "../types/auth";
+import { FormInputData } from "../types/form";
+import { DEFAULT_INPUT_DATA } from "../constants/form";
 import TextInput from "../components/ui/form/TextInput";
-import Button from "../components/ui/form/Button";
+import Button from "../components/ui/common/Button";
 import Link from "../components/ui/text/Link";
 import AuthScreen from "../components/auth/AuthScreen";
 import FormContainer from "../components/auth/FormContainer";
-import { useAuth } from "../context/AuthContext";
 
 const RegisterScreen: FC<RegisterScreenProps> = ({ navigation }) => {
   const { theme } = useTheme();
   const { setUser } = useAuth();
 
-  const [nameData, setNameData] = useState<AuthFormInputData>(
-    DEFAULT_INPUT_DATA
-  );
-  const [emailData, setEmailData] = useState<AuthFormInputData>(
-    DEFAULT_INPUT_DATA
-  );
-  const [passwordData, setPasswordData] = useState<AuthFormInputData>(
+  const [nameData, setNameData] = useState<FormInputData>(DEFAULT_INPUT_DATA);
+  const [emailData, setEmailData] = useState<FormInputData>(DEFAULT_INPUT_DATA);
+  const [passwordData, setPasswordData] = useState<FormInputData>(
     DEFAULT_INPUT_DATA
   );
   const [
     confirmedPasswordData,
     setConfirmedPasswordData
-  ] = useState<AuthFormInputData>(DEFAULT_INPUT_DATA);
+  ] = useState<FormInputData>(DEFAULT_INPUT_DATA);
 
 
   useEffect(() => {

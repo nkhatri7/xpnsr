@@ -5,11 +5,11 @@ import {
   StyleProp,
   TextStyle,
   View,
-  Text,
 } from "react-native";
 import { FC, useMemo, useState } from "react";
 import { useTheme } from "../../../context/ThemeContext";
 import { Theme } from "../../../constants/colours";
+import Text from "../text/Text";
 
 interface Props {
   errorMessage: string;
@@ -49,6 +49,8 @@ const styling = (theme: Theme) => StyleSheet.create({
     rowGap: 2,
   },
   textInput: {
+    fontFamily: "Roboto-Regular",
+    fontSize: 16,
     width: "100%",
     borderColor: theme.border,
     borderWidth: 1,
@@ -60,7 +62,6 @@ const styling = (theme: Theme) => StyleSheet.create({
   },
   focusedInput: {
     borderColor: theme.primary,
-    borderWidth: 2,
   },
   inputError: {
     borderColor: theme.error,

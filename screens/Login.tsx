@@ -4,11 +4,11 @@ import { LoginScreenProps } from "../types/navigation";
 import { useTheme } from "../context/ThemeContext";
 import AuthScreen from "../components/auth/AuthScreen";
 import TextInput from "../components/ui/form/TextInput";
-import Button from "../components/ui/form/Button";
+import Button from "../components/ui/common/Button";
 import Link from "../components/ui/text/Link";
 import FormContainer from "../components/auth/FormContainer";
-import { AuthFormInputData } from "../types/auth";
-import { DEFAULT_INPUT_DATA } from "../constants/auth";
+import { FormInputData } from "../types/form";
+import { DEFAULT_INPUT_DATA } from "../constants/form";
 import { signInUser } from "../utils/auth";
 import { useAuth } from "../context/AuthContext";
 
@@ -16,10 +16,8 @@ const LoginScreen: FC<LoginScreenProps> = ({ navigation }) => {
   const { theme } = useTheme();
   const { setUser } = useAuth();
 
-  const [emailData, setEmailData] = useState<AuthFormInputData>(
-    DEFAULT_INPUT_DATA
-  );
-  const [passwordData, setPasswordData] = useState<AuthFormInputData>(
+  const [emailData, setEmailData] = useState<FormInputData>(DEFAULT_INPUT_DATA);
+  const [passwordData, setPasswordData] = useState<FormInputData>(
     DEFAULT_INPUT_DATA
   );
 

@@ -1,7 +1,8 @@
-import { Pressable, StyleSheet, Text } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 import { FC, PropsWithChildren, useMemo } from "react";
 import { Theme } from "../../../constants/colours";
 import { useTheme } from "../../../context/ThemeContext";
+import Text from "../text/Text";
 
 interface Props {
   onPress?: () => void;
@@ -30,6 +31,8 @@ const styling = (theme: Theme) => StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: theme.primary,
     borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
   },
   buttonPressed: {
     backgroundColor: theme.primaryAlt
@@ -37,6 +40,6 @@ const styling = (theme: Theme) => StyleSheet.create({
   text: {
     fontFamily: "Roboto-Medium",
     color: "#FFF",
-    fontSize: 15,
+    fontSize: 16,
   },
 });

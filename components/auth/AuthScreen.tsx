@@ -6,7 +6,7 @@ import {
   View,
 } from "react-native";
 import Heading from "../ui/text/Heading";
-import ScreenWrapper from "../layout/ScreenWrapper";
+import ScreenWrapper from "../ui/layout/ScreenWrapper";
 
 interface Props {
   title: string;
