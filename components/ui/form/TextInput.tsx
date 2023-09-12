@@ -31,6 +31,7 @@ const TextInput: FC<Props & TextInputProps> = ({ errorMessage, ...props }) => {
         keyboardAppearance={isDarkMode ? "dark" : "light"}
         onFocus={() => setBorderStyles(styles.focusedInput)}
         onBlur={() => setBorderStyles({})}
+        placeholderTextColor={theme.placeholder}
         {...props}
       />
       {errorMessage && (
