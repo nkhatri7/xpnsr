@@ -1,10 +1,13 @@
 export interface Expense {
   id: string;
+  userId: string;
   name: string;
   amount: number;
   category: ExpenseCategory;
   date: Date;
 }
+
+export type ExpenseFormData = Omit<Expense, "id">;
 
 export enum ExpenseCategory {
   BUSINESS = "Business",
