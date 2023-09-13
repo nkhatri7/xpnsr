@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import ScreenWrapper from "../components/ui/layout/ScreenWrapper";
+import ScrollScreenWrapper from "../components/ui/layout/ScrollScreenWrapper";
 import Heading from "../components/ui/text/Heading";
 import CloseButton from "../components/ui/common/CloseButton";
 import { FC } from "react";
@@ -8,7 +8,7 @@ import AddExpenseForm from "../components/expenses/AddExpenseForm";
 
 const AddExpenseScreen: FC<AddExpenseScreenProps> = ({ navigation }) => {
   return (
-    <ScreenWrapper>
+    <ScrollScreenWrapper>
       <View style={styles.container}>
         <View style={styles.header}>
           <Heading style={{ fontSize: 24 }}>Add an expense</Heading>
@@ -16,7 +16,7 @@ const AddExpenseScreen: FC<AddExpenseScreenProps> = ({ navigation }) => {
         </View>
         <AddExpenseForm />
       </View>
-    </ScreenWrapper>
+    </ScrollScreenWrapper>
   );
 };
 

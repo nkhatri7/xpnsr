@@ -7,7 +7,13 @@ export interface Expense {
   date: Date;
 }
 
-export type ExpenseFormData = Omit<Expense, "id">;
+export interface FirebaseExpense {
+  userId: string;
+  name: string;
+  amount: number;
+  category: ExpenseCategory;
+  date: string;
+}
 
 export enum ExpenseCategory {
   BUSINESS = "Business",

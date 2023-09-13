@@ -5,7 +5,7 @@ import { User } from "firebase/auth";
 import { getCurrentMonthName } from "../utils/date";
 import { Theme } from "../constants/colours";
 import { useTheme } from "../context/ThemeContext";
-import ScreenWrapper from "../components/ui/layout/ScreenWrapper";
+import ScrollScreenWrapper from "../components/ui/layout/ScrollScreenWrapper";
 import Heading from "../components/ui/text/Heading";
 
 const HomeScreen: FC = () => {
@@ -14,7 +14,7 @@ const HomeScreen: FC = () => {
   const styles = useMemo(() => styling(theme), [theme]);
 
   return (
-    <ScreenWrapper>
+    <ScrollScreenWrapper>
       <View style={styles.container}>
         <Heading style={{ fontSize: 36 }}>Hi {getUserFirstName(user)}</Heading>
         <View style={styles.statSummaryContainer}>
@@ -26,7 +26,7 @@ const HomeScreen: FC = () => {
           <View style={styles.placeholderCard}></View>
         </View>
       </View>
-    </ScreenWrapper>
+    </ScrollScreenWrapper>
   );
 };
 

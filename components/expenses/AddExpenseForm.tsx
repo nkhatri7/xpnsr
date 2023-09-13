@@ -73,7 +73,7 @@ const AddExpenseForm: FC = () => {
       name: nameData.value,
       amount: getAmountValue(amountData.value),
       category,
-      date: date,
+      date: date.toDateString(),
     });
     if (isSuccessful) {
       navigation.navigate("Root", { screen: "Expenses" });
