@@ -70,18 +70,18 @@ export const getCategoryIconName = (
   category: ExpenseCategory
 ): keyof typeof Ionicons["glyphMap"] => {
   if (category === ExpenseCategory.BUSINESS) return "business";
-  if (category === ExpenseCategory.DONATION) return "gift";
-  if (category === ExpenseCategory.EDUCATION) return "school";
-  if (category === ExpenseCategory.ENTERTAINMENT) return "film";
-  if (category === ExpenseCategory.FOOD) return "fast-food";
-  if (category === ExpenseCategory.GROCERIES) return "nutrition";
-  if (category === ExpenseCategory.HEALTH) return "fitness";
-  if (category === ExpenseCategory.HOME) return "home";
-  if (category === ExpenseCategory.INVESTMENT) return "cash";
-  if (category === ExpenseCategory.OTHER) return "help-circle";
-  if (category === ExpenseCategory.SHOPPING) return "cart";
-  if (category === ExpenseCategory.TRANSPORT) return "car";
-  if (category === ExpenseCategory.TRAVEL) return "airplane";
+  if (category === ExpenseCategory.DONATION) return "gift-outline";
+  if (category === ExpenseCategory.EDUCATION) return "school-outline";
+  if (category === ExpenseCategory.ENTERTAINMENT) return "film-outline";
+  if (category === ExpenseCategory.FOOD) return "fast-food-outline";
+  if (category === ExpenseCategory.GROCERIES) return "nutrition-outline";
+  if (category === ExpenseCategory.HEALTH) return "fitness-outline";
+  if (category === ExpenseCategory.HOME) return "home-outline";
+  if (category === ExpenseCategory.INVESTMENT) return "cash-outline";
+  if (category === ExpenseCategory.OTHER) return "help";
+  if (category === ExpenseCategory.SHOPPING) return "cart-outline";
+  if (category === ExpenseCategory.TRANSPORT) return "car-outline";
+  if (category === ExpenseCategory.TRAVEL) return "airplane-outline";
 
   return "help-circle";
 };
