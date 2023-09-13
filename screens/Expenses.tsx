@@ -1,6 +1,5 @@
 import { FC, useCallback, useEffect } from "react";
 import {
-  ActivityIndicator,
   Alert,
   FlatList,
   RefreshControl,
@@ -81,6 +80,6 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "stretch",
     marginTop: 30,
-    rowGap: 5,
+    rowGap: 8,
   },
 });
