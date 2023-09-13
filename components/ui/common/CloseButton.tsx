@@ -1,4 +1,4 @@
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { FC } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { useTheme } from "../../../context/ThemeContext";
@@ -17,8 +17,8 @@ const CloseButton: FC<Props> = ({ onPress }) => {
       android_ripple={{ color: "rgba(0, 0, 0, 0.2)" }}
     >
       <View style={styles.iconContainer}>
-        <MaterialCommunityIcons
-          name="window-close"
+        <Ionicons
+          name="close"
           size={28}
           color={theme.text}
         />

@@ -10,6 +10,7 @@ import {
 } from "@expo-google-fonts/roboto";
 import { useEffect } from "react";
 import Navigator from "./navigation/Navigator";
+import { ExpenseProvider } from "./context/ExpenseContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -34,7 +35,9 @@ export default function App() {
     <NavigationContainer>
       <AuthProvider>
         <ThemeProvider>
-          <Navigator />
+          <ExpenseProvider>
+            <Navigator />
+          </ExpenseProvider>
         </ThemeProvider>
       </AuthProvider>
     </NavigationContainer>

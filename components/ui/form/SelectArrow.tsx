@@ -1,4 +1,4 @@
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { FC, useEffect, useRef } from "react";
 import { Animated, Easing } from "react-native";
 import { useTheme } from "../../../context/ThemeContext";
@@ -45,7 +45,7 @@ const SelectArrow: FC<Props> = ({ isSelectOpen }) => {
 
   return (
     <Animated.View style={{ transform: [{ rotate }] }}>
-      <MaterialCommunityIcons
+      <Ionicons
         name="chevron-down"
         size={24}
         color={theme.text}

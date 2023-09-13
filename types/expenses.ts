@@ -19,6 +19,7 @@ export enum ExpenseCategory {
   BUSINESS = "Business",
   DONATION = "Donation",
   EDUCATION = "Education",
+  ENTERTAINMENT = "Entertainment",
   FOOD = "Food & Drinks",
   GROCERIES = "Groceries",
   HEALTH = "Health",
@@ -28,5 +29,4 @@ export enum ExpenseCategory {
   SHOPPING = "Shopping",
   TRANSPORT = "Transport",
   TRAVEL = "Travel",
-  UTILITIES = "Utilities",
 }

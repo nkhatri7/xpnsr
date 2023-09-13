@@ -8,9 +8,11 @@ import Select from "../ui/form/Select";
 import DateInput from "../ui/form/DateInput";
 import Button from "../ui/common/Button";
 import { createExpense } from "../../utils/expenses";
+import { enumFromStringValue } from "../../utils";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../types/navigation";
 import { useAuth } from "../../context/AuthContext";
+import { useExpenses } from "../../context/ExpenseContext";
 
 const expenseCategories: string[] = Object.values(ExpenseCategory);
 
@@ -31,6 +33,7 @@ const AddExpenseForm: FC = () => {
   const [date, setDate] = useState<Date>(new Date());
 
   const { user } = useAuth();
+  const { updateExpenses } = useExpenses();
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   useEffect(() => {
@@ -67,21 +70,23 @@ const AddExpenseForm: FC = () => {
       setCategoryData({ ...categoryData, errorMessage: "Invalid category" });
       return;
     }
-
-    const isSuccessful = await createExpense({
-      userId: user?.uid ?? "",
-      name: nameData.value,
-      amount: getAmountValue(amountData.value),
-      category,
-      date: date.toDateString(),
-    });
-    if (isSuccessful) {
-      navigation.navigate("Root", { screen: "Expenses" });
-    } else {
-      Alert.alert(
-        "Error",
-        "There was an issue with adding your expense, please try again."
-      );
+    if (user) {
+      const isSuccessful = await createExpense({
+        userId: user.uid,
+        name: nameData.value,
+        amount: getAmountValue(amountData.value),
+        category,
+        date: date.toDateString(),
+      });
+      if (isSuccessful) {
+        updateExpenses(user.uid);
+        navigation.goBack();
+      } else {
+        Alert.alert(
+          "Error",
+          "There was an issue with adding your expense, please try again."
+        );
+      }
     }
   };
 
@@ -142,16 +147,6 @@ const AddExpenseForm: FC = () => {
 };
 
 export default AddExpenseForm;
-
-// Solution from https://stackoverflow.com/questions/17380845/how-do-i-convert-a-string-to-enum-in-typescript
-function enumFromStringValue<T> (
-  enm: { [s: string]: T},
-  value: string
-): T | undefined {
-  return (Object.values(enm) as unknown as string[]).includes(value)
-    ? value as unknown as T
-    : undefined;
-}
 
 const getAmountValue = (amount: string): number => {
   const dotIndex = amount.indexOf(".");

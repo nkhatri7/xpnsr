@@ -9,7 +9,8 @@ import {
   ref,
   set,
 } from "firebase/database";
-import { Expense, FirebaseExpense } from "../types/expenses";
+import { Expense, ExpenseCategory, FirebaseExpense } from "../types/expenses";
+import { Ionicons } from "@expo/vector-icons";
 
 const database = getDatabase(app);
 const dbRef = ref(database, "expenses");
@@ -33,6 +34,11 @@ export const createExpense = async (
   }
 };
 
+/**
+ * Fetches all the expenses for the user with the given `uid`.
+ * @param uid The ID of the current user.
+ * @returns An array of expenses for the user.
+ */
 export const getUserExpenses = async (uid: string): Promise<Expense[]> => {
   const expensesQuery = query(dbRef, orderByChild("userId"), equalTo(uid));
   const snapshot = await get(expensesQuery);
@@ -53,4 +59,29 @@ export const getUserExpenses = async (uid: string): Promise<Expense[]> => {
   } else {
     return [];
   }
+};
+
+/**
+ * Finds the icon name for the given category.
+ * @param category An {@link ExpenseCategory}.
+ * @returns An icon name.
+ */
+export const getCategoryIconName = (
+  category: ExpenseCategory
+): keyof typeof Ionicons["glyphMap"] => {
+  if (category === ExpenseCategory.BUSINESS) return "business";
+  if (category === ExpenseCategory.DONATION) return "gift";
+  if (category === ExpenseCategory.EDUCATION) return "school";
+  if (category === ExpenseCategory.ENTERTAINMENT) return "film";
+  if (category === ExpenseCategory.FOOD) return "fast-food";
+  if (category === ExpenseCategory.GROCERIES) return "nutrition";
+  if (category === ExpenseCategory.HEALTH) return "fitness";
+  if (category === ExpenseCategory.HOME) return "home";
+  if (category === ExpenseCategory.INVESTMENT) return "cash";
+  if (category === ExpenseCategory.OTHER) return "help-circle";
+  if (category === ExpenseCategory.SHOPPING) return "cart";
+  if (category === ExpenseCategory.TRANSPORT) return "car";
+  if (category === ExpenseCategory.TRAVEL) return "airplane";
+
+  return "help-circle";
 };

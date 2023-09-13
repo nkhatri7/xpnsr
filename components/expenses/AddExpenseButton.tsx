@@ -4,7 +4,7 @@ import { useTheme } from "../../context/ThemeContext";
 import { useMemo } from "react";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../types/navigation";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 const AddExpenseButton = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -18,7 +18,7 @@ const AddExpenseButton = () => {
       android_ripple={{ color: theme.primaryAlt }}
     >
       <View style={styles.iconContainer}>
-        <MaterialCommunityIcons name="plus" size={28} color="white" />
+        <Ionicons name="add" size={32} color="white" />
       </View>
     </Pressable>
   );
@@ -28,8 +28,8 @@ export default AddExpenseButton;
 
 const styling = (theme: Theme) => StyleSheet.create({
   button: {
-    height: 40,
-    width: 40,
+    height: 50,
+    width: 50,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: theme.primary,
