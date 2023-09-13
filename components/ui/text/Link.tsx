@@ -1,7 +1,6 @@
-import { FC, PropsWithChildren, useMemo } from "react";
-import { Pressable, StyleProp, StyleSheet, Text, TextStyle } from "react-native";
-import { useTheme } from "../../../context/ThemeContext";
-import { Theme } from "../../../constants/colours";
+import { FC, PropsWithChildren } from "react";
+import { Pressable, StyleProp, StyleSheet, TextStyle } from "react-native";
+import Text from "./Text";
 
 interface Props {
   onPress?: () => void;
@@ -13,22 +12,19 @@ const Link: FC<PropsWithChildren<Props>> = ({
   onPress,
   style: customTextStyle,
 }) => {
-  const { theme } = useTheme();
-  const styles = useMemo(() => styling(theme), [theme]);
-
   return (
     <Pressable
       style={({ pressed }) => [styles.link, pressed && styles.linkPressed]}
       onPress={onPress}
     >
-      <Text style={[styles.text, customTextStyle]}>{children}</Text>
+      <Text style={customTextStyle}>{children}</Text>
     </Pressable>
   );
 };
 
 export default Link;
 
-const styling = (theme: Theme) => StyleSheet.create({
+const styles = StyleSheet.create({
   link: {
     paddingVertical: 3,
     paddingHorizontal: 5,
@@ -37,8 +33,5 @@ const styling = (theme: Theme) => StyleSheet.create({
   },
   linkPressed: {
     backgroundColor: "rgba(0, 0, 0, 0.05)",
-  },
-  text: {
-    color: theme.text,
   },
 });

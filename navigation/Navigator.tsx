@@ -7,6 +7,7 @@ import { RootStackParamList } from "../types/navigation";
 import RootTabs from "./RootTabs";
 import RegisterScreen from "../screens/Register";
 import LoginScreen from "../screens/Login";
+import AddExpenseScreen from "../screens/AddExpense";
 
 const Navigator: FC = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -20,6 +21,13 @@ const Navigator: FC = () => {
         {isAuthenticated ? (
           <Stack.Group>
             <Stack.Screen name="Root" component={RootTabs} />
+            <Stack.Screen
+              name="AddExpense"
+              component={AddExpenseScreen}
+              options={{
+                presentation: "fullScreenModal"
+              }}
+            />
           </Stack.Group>
         ) : (
           <Stack.Group>

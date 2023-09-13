@@ -1,13 +1,13 @@
-import { ComponentProps, FC } from "react";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { FC } from "react";
+import { Ionicons } from "@expo/vector-icons";
 
 interface Props {
-  name: ComponentProps<typeof MaterialCommunityIcons>["name"];
+  name: keyof typeof Ionicons["glyphMap"];
   color: string;
 }
 
 const TabIcon: FC<Props> = ({ name, color }) => (
-  <MaterialCommunityIcons
+  <Ionicons
     size={28}
     name={name}
     color={color}

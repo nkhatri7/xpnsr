@@ -6,7 +6,7 @@ import {
   View,
 } from "react-native";
 import Heading from "../ui/text/Heading";
-import ScreenWrapper from "../layout/ScreenWrapper";
+import ScrollScreenWrapper from "../ui/layout/ScrollScreenWrapper";
 
 interface Props {
   title: string;
@@ -14,7 +14,7 @@ interface Props {
 
 const AuthScreen: FC<PropsWithChildren<Props>> = ({ children, title }) => {
   return (
-    <ScreenWrapper>
+    <ScrollScreenWrapper>
       <KeyboardAvoidingView style={{ justifyContent: "center" }} behavior="position">
         <View style={styles.wrapper}>
           <View style={styles.logoContainer}>
@@ -27,7 +27,7 @@ const AuthScreen: FC<PropsWithChildren<Props>> = ({ children, title }) => {
           {children}
         </View>
       </KeyboardAvoidingView>
-    </ScreenWrapper>
+    </ScrollScreenWrapper>
   );
 };
 

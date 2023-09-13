@@ -2,9 +2,10 @@ import { FC } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { RootTabsParamList } from "../types/navigation";
 import { colourVariables } from "../constants/colours";
-import Home from "../screens/Home";
 import TabIcon from "../components/tabs/TabIcon";
 import { useTheme } from "../context/ThemeContext";
+import HomeScreen from "../screens/Home";
+import ExpensesScreen from "../screens/Expenses";
 
 const RootTabs: FC = () => {
   const Tab = createBottomTabNavigator<RootTabsParamList>();
@@ -23,9 +24,16 @@ const RootTabs: FC = () => {
     >
       <Tab.Screen
         name="Home"
-        component={Home}
+        component={HomeScreen}
         options={{
           tabBarIcon: ({ color }) => <TabIcon name="home" color={color} />
+        }}
+      />
+      <Tab.Screen
+        name="Expenses"
+        component={ExpensesScreen}
+        options={{
+          tabBarIcon: ({ color }) => <TabIcon name="cash" color={color} />
         }}
       />
     </Tab.Navigator>
