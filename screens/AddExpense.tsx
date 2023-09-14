@@ -12,7 +12,7 @@ const AddExpenseScreen: FC<AddExpenseScreenProps> = ({ navigation }) => {
       <View style={styles.container}>
         <View style={styles.header}>
           <Heading style={{ fontSize: 24 }}>Add an expense</Heading>
-          <CloseButton onPress={() => navigation.goBack()} />
+          <CloseButton onPress={navigation.goBack.bind(this)} />
         </View>
         <AddExpenseForm />
       </View>
@@ -33,5 +33,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-  }
+  },
 });

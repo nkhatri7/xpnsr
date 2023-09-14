@@ -9,7 +9,7 @@ import {
   ref,
   set,
 } from "firebase/database";
-import { Expense, ExpenseCategory, FirebaseExpense } from "../types/expenses";
+import { Expense, ExpenseCategory, ExpenseSortOption, FirebaseExpense } from "../types/expenses";
 import { Ionicons } from "@expo/vector-icons";
 
 const database = getDatabase(app);
@@ -83,5 +83,57 @@ export const getCategoryIconName = (
   if (category === ExpenseCategory.TRANSPORT) return "car-outline";
   if (category === ExpenseCategory.TRAVEL) return "airplane-outline";
 
-  return "help-circle";
+  return "help";
 };
+
+/**
+ * Sorts the given expenses array by the given sort type.
+ * @param expenses An array of {@link Expense} objects.
+ * @param sortType The sort type (see {@link ExpenseSortOption}).
+ * @returns A sorted array based on the sort type given.
+ */
+export const sortExpenses = (
+  expenses: Expense[],
+  sortOption: ExpenseSortOption
+): Expense[] => {
+  if (sortOption === ExpenseSortOption.MOST_RECENT) {
+    return sortMostRecentExpenses(expenses);
+  }
+  if (sortOption === ExpenseSortOption.AMOUNT_HIGH_TO_LOW) {
+    return sortMostExpensiveExpenses(expenses);
+  }
+  if (sortOption === ExpenseSortOption.AMOUNT_LOW_TO_HIGH) {
+    return sortLeastExpensiveExpenses(expenses);
+  }
+  // Expenses to be passed in will be default expenses with no sorting
+  // It is ordered by oldest by default
+  return expenses;
+};
+
+/**
+ * Sorts the given expenses array by the most recent expenses.
+ * @param expenses An array of {@link Expense} objects.
+ * @returns An array of expense objects with the most recent ones first.
+ */
+const sortMostRecentExpenses = (expenses: Expense[]): Expense[] => (
+  // Can use reverse as by default it is the oldest expenses first
+  [...expenses].reverse()
+);
+
+/**
+ * Sorts the given expenses array by the most expensive expenses.
+ * @param expenses An array of {@link Expense} objects.
+ * @returns An array of expense objects with the most expensive ones first.
+ */
+const sortMostExpensiveExpenses = (expenses: Expense[]): Expense[] => (
+  [...expenses].sort((a, b) => b.amount - a.amount)
+);
+
+/**
+ * Sorts the given expenses array by the least expensive expenses.
+ * @param expenses An array of {@link Expense} objects.
+ * @returns An array of expense objects with the least expensive ones first.
+ */
+const sortLeastExpensiveExpenses = (expenses: Expense[]): Expense[] => (
+  [...expenses].sort((a, b) => a.amount - b.amount)
+);

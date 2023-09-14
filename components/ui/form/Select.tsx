@@ -1,9 +1,11 @@
 import { FC, useEffect, useMemo, useState } from "react";
 import {
   LayoutAnimation,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
+  UIManager,
   View,
 } from "react-native";
 import { Theme } from "../../../constants/colours";
@@ -31,6 +33,13 @@ const Select: FC<Props> = ({
   const styles = useMemo(() => styling(theme), [theme]);
   const [isSelectOpen, setSelectOpen] = useState<boolean>(false);
 
+  if (
+    Platform.OS === "android"
+    && UIManager.setLayoutAnimationEnabledExperimental
+  ) {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+  }
+
   useEffect(() => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
   }, [isSelectOpen]);
@@ -49,7 +58,7 @@ const Select: FC<Props> = ({
             isSelectOpen && { borderColor: theme.primary },
             errorMessage !== "" && { borderColor: theme.error },
           ]}
-          onPress={() => setSelectOpen((prev) => !prev)}
+          onPress={setSelectOpen.bind(this, (prev) => !prev)}
         >
           <Text
             style={[

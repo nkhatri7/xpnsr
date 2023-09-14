@@ -14,17 +14,27 @@ import Heading from "../components/ui/text/Heading";
 import AddExpenseButton from "../components/expenses/AddExpenseButton";
 import ExpenseCard from "../components/expenses/ExpenseCard";
 import ScreenWrapper from "../components/ui/layout/ScreenWrapper";
+import Text from "../components/ui/text/Text";
+import IconButton from "../components/ui/common/IconButton";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { RootStackParamList } from "../types/navigation";
 
 const ExpensesScreen: FC = () => {
   const { user } = useAuth();
   const { theme } = useTheme();
-  const { expenses, updateExpenses, loading, hasError } = useExpenses();
+  const { sortedExpenses, updateExpenses, loading, hasError } = useExpenses();
+  // Using useNavigation instead of default navigation prop so that the stack
+  // navigation can be accessed
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const fetchExpenses = useCallback(async (user: User | null) => {
     if (user) {
       await updateExpenses(user.uid);
       if (hasError) {
-        Alert.alert("Error","There was an issue while fetching your expenses.");
+        Alert.alert(
+          "Error",
+          "There was an issue while fetching your expenses."
+        );
       }
     }
   }, [user]);
@@ -36,9 +46,27 @@ const ExpensesScreen: FC = () => {
   return (
     <ScreenWrapper>
       <View style={styles.container}>
-        <Heading style={{ fontSize: 28 }}>Expenses</Heading>
+        <View style={styles.header}>
+          <Heading style={{ fontSize: 28 }}>Expenses</Heading>
+          <View>
+            <IconButton
+              iconName="filter"
+              onPress={() => navigation.navigate("SortExpenses")}
+            >
+              Sort
+            </IconButton>
+          </View>
+        </View>
+        {!loading && sortedExpenses.length === 0 && (
+          <View style={styles.noExpensesContainer}>
+            <Text style={styles.noExpensesText}>You have no expenses.</Text>
+            <Text style={styles.noExpensesText}>
+              Press the plus button to add one!
+            </Text>
+          </View>
+        )}
         <FlatList
-          data={expenses}
+          data={sortedExpenses}
           renderItem={({ item }) => <ExpenseCard expense={item} />}
           keyExtractor={expense => expense.id}
           horizontal={false}
@@ -48,7 +76,7 @@ const ExpensesScreen: FC = () => {
           refreshControl={
             <RefreshControl
               refreshing={loading}
-              onRefresh={() => fetchExpenses(user)}
+              onRefresh={fetchExpenses.bind(this, user)}
               colors={[theme.primary]}
               tintColor={theme.primary}
               title="Fetching your expenses"
@@ -70,11 +98,21 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingTop: 50,
   },
-  loadingContainer: {
+  header: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  noExpensesContainer: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     rowGap: 10,
+  },
+  noExpensesText: {
+    textAlign: "center",
+    fontSize: 16,
+    fontFamily: "Roboto-Medium"
   },
   expenseListContainer: {
     width: "100%",
