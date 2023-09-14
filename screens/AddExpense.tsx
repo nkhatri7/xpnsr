@@ -1,9 +1,9 @@
 import { StyleSheet, View } from "react-native";
+import { FC } from "react";
+import { AddExpenseScreenProps } from "../types/navigation";
 import ScrollScreenWrapper from "../components/ui/layout/ScrollScreenWrapper";
 import Heading from "../components/ui/text/Heading";
 import CloseButton from "../components/ui/common/CloseButton";
-import { FC } from "react";
-import { AddExpenseScreenProps } from "../types/navigation";
 import AddExpenseForm from "../components/expenses/AddExpenseForm";
 
 const AddExpenseScreen: FC<AddExpenseScreenProps> = ({ navigation }) => {

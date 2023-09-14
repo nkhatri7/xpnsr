@@ -1,8 +1,8 @@
 import { StyleSheet, View } from "react-native";
 import { Dispatch, FC, SetStateAction } from "react";
-import Text from "../text/Text";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import { useTheme } from "../../../context/ThemeContext";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import Text from "../text/Text";
 
 interface Props {
   date: Date;

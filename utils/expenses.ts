@@ -9,7 +9,12 @@ import {
   ref,
   set,
 } from "firebase/database";
-import { Expense, ExpenseCategory, ExpenseSortOption, FirebaseExpense } from "../types/expenses";
+import {
+  Expense,
+  ExpenseCategory,
+  ExpenseSortOption,
+  FirebaseExpense,
+} from "../types/expenses";
 import { Ionicons } from "@expo/vector-icons";
 
 const database = getDatabase(app);

@@ -1,5 +1,6 @@
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import { FC, useEffect, useState } from "react";
+import { FirebaseError } from "firebase/app";
 import { RegisterScreenProps } from "../types/navigation";
 import { useTheme } from "../context/ThemeContext";
 import { useAuth } from "../context/AuthContext";
@@ -32,22 +33,22 @@ const RegisterScreen: FC<RegisterScreenProps> = ({ navigation }) => {
 
 
   useEffect(() => {
-    if (nameData.errorMessage && nameData.value.trim()) {
+    if (nameData.errorMessage) {
       setNameData((data) => ({ ...data, errorMessage: "" }));
     }
-  }, [nameData]);
+  }, [nameData.value]);
 
   useEffect(() => {
-    if (emailData.errorMessage && emailData.value) {
+    if (emailData.errorMessage) {
       setEmailData((data) => ({ ...data, errorMessage: "" }));
     }
-  }, [emailData]);
+  }, [emailData.value]);
 
   useEffect(() => {
-    if (passwordData.errorMessage && passwordData.value) {
+    if (passwordData.errorMessage) {
       setPasswordData((data) => ({ ...data, errorMessage: "" }));
     }
-  }, [passwordData]);
+  }, [passwordData.value]);
 
   useEffect(() => {
     if (
@@ -56,7 +57,7 @@ const RegisterScreen: FC<RegisterScreenProps> = ({ navigation }) => {
     ) {
       setConfirmedPasswordData((data) => ({ ...data, errorMessage: "" }));
     }
-  }, [passwordData, confirmedPasswordData]);
+  }, [passwordData.value, confirmedPasswordData.value]);
 
 
   const handleRegistration = async () => {
@@ -64,12 +65,32 @@ const RegisterScreen: FC<RegisterScreenProps> = ({ navigation }) => {
     const isDataValid = validateData();
     if (isDataValid) {
       // Register user
-      const user = await registerUser(
-        nameData.value,
-        emailData.value,
-        passwordData.value
+      try {
+        const user = await registerUser(
+          nameData.value,
+          emailData.value,
+          passwordData.value
+        );
+        setUser(user);
+      } catch (e) {
+        // Firebase error is an object
+        const error = e as FirebaseError;
+        handleRegistrationError(error.code);
+      }
+    }
+  };
+
+  const handleRegistrationError = (errorCode: string) => {
+    if (errorCode.includes("email-already-in-use")) {
+      setEmailData({
+        ...emailData,
+        errorMessage: "An account with this email already exists.",
+      });
+    } else {
+      Alert.alert(
+        "Registration Failed",
+        "We're having issues creating your account. Please try again later.",
       );
-      setUser(user);
     }
   };
 
@@ -83,10 +104,10 @@ const RegisterScreen: FC<RegisterScreenProps> = ({ navigation }) => {
       setEmailData({ ...emailData, errorMessage: "Email cannot be empty" });
       isDataValid = false;
     }
-    if (!passwordData.value) {
+    if (passwordData.value.trim().length < 6) {
       setPasswordData({
         ...passwordData,
-        errorMessage: "Password cannot be empty"
+        errorMessage: "Your password must be at least 6 characters",
       });
       isDataValid = false;
     }

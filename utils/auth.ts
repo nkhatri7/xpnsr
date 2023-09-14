@@ -18,22 +18,17 @@ export const registerUser = async (
   name: string,
   email: string,
   password: string
-): Promise<User | null> => {
-  try {
-    const userCredentials = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password,
-    );
-    await updateProfile(userCredentials.user, {
-      displayName: name,
-    });
-    await updateCurrentUser(auth, userCredentials.user);
-    return userCredentials.user;
-  } catch (e) {
-    console.log(e);
-    return null;
-  }
+): Promise<User> => {
+  const userCredentials = await createUserWithEmailAndPassword(
+    auth,
+    email,
+    password,
+  );
+  await updateProfile(userCredentials.user, {
+    displayName: name,
+  });
+  await updateCurrentUser(auth, userCredentials.user);
+  return userCredentials.user;
 };
 
 /**
@@ -47,17 +42,12 @@ export const registerUser = async (
 export const signInUser = async (
   email: string,
   password: string,
-): Promise<User | null> => {
-  try {
-    const userCredentials = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password,
-    );
-    await updateCurrentUser(auth, userCredentials.user);
-    return userCredentials.user;
-  } catch (e) {
-    console.log(e);
-    return null;
-  }
+): Promise<User> => {
+  const userCredentials = await signInWithEmailAndPassword(
+    auth,
+    email,
+    password,
+  );
+  await updateCurrentUser(auth, userCredentials.user);
+  return userCredentials.user;
 };

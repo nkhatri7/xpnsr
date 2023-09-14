@@ -1,9 +1,16 @@
-import { Ionicons } from "@expo/vector-icons";
 import { FC, PropsWithChildren, useMemo } from "react";
-import { Pressable, StyleProp, StyleSheet, TextStyle, View, ViewStyle } from "react-native";
-import Text from "../text/Text";
-import { Theme } from "../../../constants/colours";
+import {
+  Pressable,
+  StyleProp,
+  StyleSheet,
+  TextStyle,
+  View,
+  ViewStyle,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "../../../context/ThemeContext";
+import { Theme } from "../../../constants/colours";
+import Text from "../text/Text";
 
 interface Props {
   iconName: keyof typeof Ionicons["glyphMap"];
