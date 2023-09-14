@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useTheme } from "../context/ThemeContext";
 import { RootTabsParamList } from "../types/navigation";
 import { colourVariables } from "../constants/colours";
-import TabIcon from "../components/tabs/TabIcon";
-import { useTheme } from "../context/ThemeContext";
 import HomeScreen from "../screens/Home";
 import ExpensesScreen from "../screens/Expenses";
+import TabIcon from "../components/tabs/TabIcon";
 
 const RootTabs: FC = () => {
   const Tab = createBottomTabNavigator<RootTabsParamList>();

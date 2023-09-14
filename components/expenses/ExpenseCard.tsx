@@ -1,11 +1,11 @@
 import { FC, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
+import { useTheme } from "../../context/ThemeContext";
 import { Expense } from "../../types/expenses";
 import { Theme } from "../../constants/colours";
-import { useTheme } from "../../context/ThemeContext";
-import Text from "../ui/text/Text";
-import { Ionicons } from "@expo/vector-icons";
 import { getCategoryIconName } from "../../utils/expenses";
+import { Ionicons } from "@expo/vector-icons";
+import Text from "../ui/text/Text";
 
 interface Props {
   expense: Expense;

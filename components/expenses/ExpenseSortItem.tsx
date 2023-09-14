@@ -1,9 +1,10 @@
 import { FC, useMemo } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { ExpenseSortOption } from "../../types/expenses";
 import { Theme } from "../../constants/colours";
 import { useTheme } from "../../context/ThemeContext";
 import { Ionicons } from "@expo/vector-icons";
+import Text from "../ui/text/Text";
 
 interface Props {
   sortOption: ExpenseSortOption;

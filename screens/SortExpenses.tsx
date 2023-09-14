@@ -1,11 +1,11 @@
 import { FC, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { useExpenses } from "../context/ExpenseContext";
+import { SortExpensesScreenProps } from "../types/navigation";
+import { ExpenseSortOption } from "../types/expenses";
 import ScrollScreenWrapper from "../components/ui/layout/ScrollScreenWrapper";
 import Heading from "../components/ui/text/Heading";
 import CloseButton from "../components/ui/common/CloseButton";
-import { SortExpensesScreenProps } from "../types/navigation";
-import { ExpenseSortOption } from "../types/expenses";
 import ExpenseSortItem from "../components/expenses/ExpenseSortItem";
 import Button from "../components/ui/common/Button";
 

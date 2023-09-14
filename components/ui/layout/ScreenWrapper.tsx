@@ -1,7 +1,7 @@
 import { SafeAreaView, StyleSheet } from "react-native";
-import { Theme } from "../../../constants/colours";
 import { FC, PropsWithChildren, useMemo } from "react";
 import { useTheme } from "../../../context/ThemeContext";
+import { Theme } from "../../../constants/colours";
 
 const ScreenWrapper: FC<PropsWithChildren> = ({ children }) => {
   const { theme } = useTheme();

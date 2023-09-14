@@ -1,5 +1,13 @@
 import { User } from "firebase/auth";
-import { Dispatch, FC, PropsWithChildren, SetStateAction, createContext, useContext, useState } from "react";
+import {
+  Dispatch,
+  FC,
+  PropsWithChildren,
+  SetStateAction,
+  createContext,
+  useContext,
+  useState,
+} from "react";
 import { auth } from "../firebase/config";
 
 interface AuthContextType {

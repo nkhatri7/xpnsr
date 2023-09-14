@@ -6,6 +6,8 @@ import {
   StyleSheet,
   View,
 } from "react-native";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { RootStackParamList } from "../types/navigation";
 import { useAuth } from "../context/AuthContext";
 import { useExpenses } from "../context/ExpenseContext";
 import { useTheme } from "../context/ThemeContext";
@@ -16,8 +18,6 @@ import ExpenseCard from "../components/expenses/ExpenseCard";
 import ScreenWrapper from "../components/ui/layout/ScreenWrapper";
 import Text from "../components/ui/text/Text";
 import IconButton from "../components/ui/common/IconButton";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { RootStackParamList } from "../types/navigation";
 
 const ExpensesScreen: FC = () => {
   const { user } = useAuth();
