@@ -8,13 +8,12 @@ import Select from "../ui/form/Select";
 import DateInput from "../ui/form/DateInput";
 import Button from "../ui/common/Button";
 import { createExpense } from "../../utils/expenses";
-import { enumFromStringValue } from "../../utils";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../types/navigation";
 import { useAuth } from "../../context/AuthContext";
 import { useExpenses } from "../../context/ExpenseContext";
 
-const expenseCategories: string[] = Object.values(ExpenseCategory);
+const expenseCategories: ExpenseCategory[] = Object.values(ExpenseCategory);
 
 const AddExpenseForm: FC = () => {
   const [nameData, setNameData] = useState<FormInputData<string>>(
@@ -26,7 +25,7 @@ const AddExpenseForm: FC = () => {
   const [
     categoryData,
     setCategoryData
-  ] = useState<FormInputData<string | null>>({
+  ] = useState<FormInputData<ExpenseCategory | null>>({
     value: null,
     errorMessage: "",
   });
@@ -62,11 +61,7 @@ const AddExpenseForm: FC = () => {
     if (!isDataValid) {
       return;
     }
-    const category = enumFromStringValue(
-      ExpenseCategory,
-      categoryData.value ?? ""
-    );
-    if (!category) {
+    if (!categoryData.value) {
       setCategoryData({ ...categoryData, errorMessage: "Invalid category" });
       return;
     }
@@ -75,7 +70,7 @@ const AddExpenseForm: FC = () => {
         userId: user.uid,
         name: nameData.value,
         amount: getAmountValue(amountData.value),
-        category,
+        category: categoryData.value,
         date: date.toDateString(),
       });
       if (isSuccessful) {

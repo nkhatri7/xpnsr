@@ -1,25 +1,20 @@
-import {
-  Pressable,
-  StyleProp,
-  StyleSheet,
-  TextStyle,
-  ViewStyle,
-} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { FC, PropsWithChildren, useMemo } from "react";
+import { Pressable, StyleProp, StyleSheet, TextStyle, View, ViewStyle } from "react-native";
+import Text from "../text/Text";
 import { Theme } from "../../../constants/colours";
 import { useTheme } from "../../../context/ThemeContext";
-import Text from "../text/Text";
 
 interface Props {
-  disabled?: boolean;
-  onPress?: () => void;
+  iconName: keyof typeof Ionicons["glyphMap"];
+  onPress: () => void;
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
 }
 
-const Button: FC<PropsWithChildren<Props>> = ({
+const IconButton: FC<PropsWithChildren<Props>> = ({
   children,
-  disabled = false,
+  iconName,
   onPress,
   style: customStyle,
   textStyle,
@@ -29,31 +24,34 @@ const Button: FC<PropsWithChildren<Props>> = ({
 
   return (
     <Pressable
+      onPress={onPress}
       style={({ pressed }) => [
         styles.button,
         pressed && styles.buttonPressed,
-        customStyle,
-        disabled && { opacity: 0.7 }
+        customStyle
       ]}
-      onPress={onPress}
       android_ripple={{ color: theme.primaryAlt }}
-      disabled={disabled}
     >
+      <View>
+        <Ionicons name={iconName} size={16} color="white" />
+      </View>
       <Text style={[styles.text, textStyle]}>{children}</Text>
     </Pressable>
   );
 };
 
-export default Button;
+export default IconButton;
 
 const styling = (theme: Theme) => StyleSheet.create({
   button: {
     paddingVertical: 10,
     paddingHorizontal: 20,
     backgroundColor: theme.primary,
-    borderRadius: 8,
+    borderRadius: 10,
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+    columnGap: 8,
   },
   buttonPressed: {
     backgroundColor: theme.primaryAlt

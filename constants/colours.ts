@@ -12,7 +12,7 @@ export interface Theme {
 export const colourVariables = {
   primary: "#965FDC",
   primaryLight: "#B27EEF",
-  primaryDark: "#5C22A7",
+  primaryDark: "#7F4FBB",
   error: "#D15151",
 };
 

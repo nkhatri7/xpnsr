@@ -8,6 +8,7 @@ import RootTabs from "./RootTabs";
 import RegisterScreen from "../screens/Register";
 import LoginScreen from "../screens/Login";
 import AddExpenseScreen from "../screens/AddExpense";
+import SortExpenses from "../screens/SortExpenses";
 
 const Navigator: FC = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -24,6 +25,13 @@ const Navigator: FC = () => {
             <Stack.Screen
               name="AddExpense"
               component={AddExpenseScreen}
+              options={{
+                presentation: "fullScreenModal"
+              }}
+            />
+            <Stack.Screen
+              name="SortExpenses"
+              component={SortExpenses}
               options={{
                 presentation: "fullScreenModal"
               }}

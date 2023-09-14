@@ -19,11 +19,13 @@ const ExpenseCard: FC<Props> = ({ expense }) => {
     <View style={styles.card}>
       <View style={styles.cardLeft}>
         <View>
-          <Ionicons
-            name={getCategoryIconName(expense.category)}
-            size={32}
-            color={theme.primary}
-          />
+          <View style={styles.iconContainer}>
+            <Ionicons
+              name={getCategoryIconName(expense.category)}
+              size={24}
+              color="white"
+            />
+          </View>
         </View>
         <View style={{ rowGap: 5 }}>
           <Text style={styles.expenseName}>{expense.name}</Text>
@@ -51,6 +53,14 @@ const styling = (theme: Theme) => StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     columnGap: 10,
+  },
+  iconContainer: {
+    height: 40,
+    width: 40,
+    borderRadius: 10000,
+    backgroundColor: theme.primary,
+    alignItems: "center",
+    justifyContent: "center",
   },
   expenseName: {
     fontSize: 16,
