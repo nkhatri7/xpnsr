@@ -58,7 +58,7 @@ const Select: FC<Props> = ({
             isSelectOpen && { borderColor: theme.primary },
             errorMessage !== "" && { borderColor: theme.error },
           ]}
-          onPress={setSelectOpen.bind(this, (prev) => !prev)}
+          onPress={() => setSelectOpen((prev) => !prev)}
         >
           <Text
             style={[

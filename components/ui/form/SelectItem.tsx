@@ -22,7 +22,7 @@ const SelectItem: FC<Props> = ({ value, selectedValue, onPress }) => {
         pressed && styles.dropdownItemPressed,
       ]}
       android_ripple={{ color: theme.card }}
-      onPress={onPress.bind(this, value)}
+      onPress={() => onPress(value)}
     >
       <Text
         style={[

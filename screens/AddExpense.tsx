@@ -12,7 +12,7 @@ const AddExpenseScreen: FC<AddExpenseScreenProps> = ({ navigation }) => {
       <View style={styles.container}>
         <View style={styles.header}>
           <Heading style={{ fontSize: 24 }}>Add an expense</Heading>
-          <CloseButton onPress={navigation.goBack.bind(this)} />
+          <CloseButton onPress={() => navigation.goBack()} />
         </View>
         <AddExpenseForm />
       </View>

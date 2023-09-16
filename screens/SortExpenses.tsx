@@ -29,7 +29,7 @@ const SortExpenses: FC<SortExpensesScreenProps> = ({ navigation }) => {
       <View style={styles.container}>
         <View style={styles.header}>
           <Heading style={{ fontSize: 24 }}>Sort Expenses</Heading>
-          <CloseButton onPress={navigation.goBack.bind(this)} />
+          <CloseButton onPress={() => navigation.goBack()} />
         </View>
         <View style={styles.mainContentContainer}>
           <View>
@@ -38,7 +38,7 @@ const SortExpenses: FC<SortExpensesScreenProps> = ({ navigation }) => {
                 key={index}
                 sortOption={option}
                 isSelected={option === selectedOption}
-                onPress={setSelectedOption.bind(this, option)}
+                onPress={() => setSelectedOption(option)}
               />
             ))}
           </View>

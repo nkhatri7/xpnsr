@@ -22,7 +22,13 @@ import IconButton from "../components/ui/common/IconButton";
 const ExpensesScreen: FC = () => {
   const { user } = useAuth();
   const { theme } = useTheme();
-  const { sortedExpenses, updateExpenses, loading, hasError } = useExpenses();
+  const {
+    sortOption,
+    sortedExpenses,
+    updateExpenses,
+    loading,
+    hasError,
+  } = useExpenses();
   // Using useNavigation instead of default navigation prop so that the stack
   // navigation can be accessed
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -46,16 +52,18 @@ const ExpensesScreen: FC = () => {
   return (
     <ScreenWrapper>
       <View style={styles.container}>
-        <View style={styles.header}>
-          <Heading style={{ fontSize: 28 }}>Expenses</Heading>
-          <View>
-            <IconButton
-              iconName="filter"
-              onPress={() => navigation.navigate("SortExpenses")}
-            >
-              Sort
-            </IconButton>
-          </View>
+        <Heading style={{ fontSize: 28 }}>Expenses</Heading>
+        <View style={styles.optionsContainer}>
+          <IconButton
+            iconName="filter"
+            textStyle={{ maxWidth: 120 }}
+            onPress={() => navigation.navigate("SortExpenses")}
+          >
+            {sortOption}
+          </IconButton>
+          <IconButton iconName="funnel-outline">
+            Filter
+          </IconButton>
         </View>
         {!loading && sortedExpenses.length === 0 && (
           <View style={styles.noExpensesContainer}>
@@ -76,7 +84,7 @@ const ExpensesScreen: FC = () => {
           refreshControl={
             <RefreshControl
               refreshing={loading}
-              onRefresh={fetchExpenses.bind(this, user)}
+              onRefresh={() => fetchExpenses(user)}
               colors={[theme.primary]}
               tintColor={theme.primary}
               title="Fetching your expenses"
@@ -102,6 +110,13 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
+  },
+  optionsContainer: {
+    marginTop: 20,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "center",
+    gap: 10,
   },
   noExpensesContainer: {
     flex: 1,

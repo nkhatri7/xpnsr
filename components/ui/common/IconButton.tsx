@@ -14,7 +14,7 @@ import Text from "../text/Text";
 
 interface Props {
   iconName: keyof typeof Ionicons["glyphMap"];
-  onPress: () => void;
+  onPress?: () => void;
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
 }
@@ -42,7 +42,13 @@ const IconButton: FC<PropsWithChildren<Props>> = ({
       <View>
         <Ionicons name={iconName} size={16} color="white" />
       </View>
-      <Text style={[styles.text, textStyle]}>{children}</Text>
+      <Text
+        style={[styles.text, textStyle]}
+        numberOfLines={1}
+        ellipsizeMode="tail"
+      >
+        {children}
+      </Text>
     </Pressable>
   );
 };
