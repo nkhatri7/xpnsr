@@ -1,8 +1,8 @@
 import { FC, useMemo } from "react";
 import { Pressable, StyleSheet } from "react-native";
-import { Theme } from "../../../constants/colours";
-import { useTheme } from "../../../context/ThemeContext";
-import Text from "../text/Text";
+import { Theme } from "../../../../constants/colours";
+import { useTheme } from "../../../../context/ThemeContext";
+import Text from "../../text/Text";
 
 interface Props {
   value: any;

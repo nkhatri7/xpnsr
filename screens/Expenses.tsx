@@ -61,7 +61,10 @@ const ExpensesScreen: FC = () => {
           >
             {sortOption}
           </IconButton>
-          <IconButton iconName="funnel-outline">
+          <IconButton
+            iconName="funnel-outline"
+            onPress={() => navigation.navigate("FilterExpenses")}
+          >
             Filter
           </IconButton>
         </View>

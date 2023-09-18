@@ -11,7 +11,7 @@ import Button from "../components/ui/common/Button";
 
 const sortOptions: ExpenseSortOption[] = Object.values(ExpenseSortOption);
 
-const SortExpenses: FC<SortExpensesScreenProps> = ({ navigation }) => {
+const SortExpensesScreen: FC<SortExpensesScreenProps> = ({ navigation }) => {
   const { sortOption, setSortOption } = useExpenses();
   const [selectedOption, setSelectedOption] = useState<ExpenseSortOption>(
     sortOption
@@ -51,7 +51,7 @@ const SortExpenses: FC<SortExpensesScreenProps> = ({ navigation }) => {
   );
 };
 
-export default SortExpenses;
+export default SortExpensesScreen;
 
 const styles = StyleSheet.create({
   container: {

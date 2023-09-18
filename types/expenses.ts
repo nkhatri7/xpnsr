@@ -37,3 +37,16 @@ export enum ExpenseSortOption {
   AMOUNT_HIGH_TO_LOW = "Highest to lowest (amount)",
   AMOUNT_LOW_TO_HIGH = "Lowest to highest (amount)",
 }
+
+export interface ExpenseFilter {
+  categories: ExpenseCategory[];
+  date: ExpenseDateFilterOption;
+}
+
+export enum ExpenseDateFilterOption {
+  NONE = "None",
+  TODAY = "Today",
+  PAST_WEEK = "Past week",
+  THIS_MONTH = "This month",
+  THIS_YEAR = "This year",
+}
