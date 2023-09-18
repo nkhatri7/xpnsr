@@ -100,11 +100,7 @@ const FilterExpensesScreen: FC<FilterExpensesScreenProps> = ({
             </Accordion>
           </ScrollView>
           <View style={styles.filterActionsContainer}>
-            <Button
-              style={styles.clearFiltersButton}
-              textStyle={{ color: theme.text }}
-              onPress={clearFilters}
-            >
+            <Button style={{ flex: 1 }} secondary={true} onPress={clearFilters}>
               Clear Filters
             </Button>
             <Button style={{ flex: 1 }} onPress={handleApplyFilters}>
@@ -144,9 +140,5 @@ const styling = (theme: Theme) => StyleSheet.create({
     width: "100%",
     paddingTop: 30,
     columnGap: 10,
-  },
-  clearFiltersButton: {
-    backgroundColor: theme.card,
-    flex: 1,
   },
 });

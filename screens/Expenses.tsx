@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../types/navigation";
+import { ExpenseDateFilterOption } from "../types/expenses";
 import { useAuth } from "../context/AuthContext";
 import { useExpenses } from "../context/ExpenseContext";
 import { useTheme } from "../context/ThemeContext";
@@ -23,6 +24,7 @@ const ExpensesScreen: FC = () => {
   const { user } = useAuth();
   const { theme } = useTheme();
   const {
+    filter,
     sortOption,
     sortedExpenses,
     updateExpenses,
@@ -49,6 +51,10 @@ const ExpensesScreen: FC = () => {
     fetchExpenses(user);
   }, [user]);
 
+  const isFilterActive = (
+    filter.categories.length > 0 || filter.date !== ExpenseDateFilterOption.NONE
+  );
+
   return (
     <ScreenWrapper>
       <View style={styles.container}>
@@ -62,10 +68,10 @@ const ExpensesScreen: FC = () => {
             {sortOption}
           </IconButton>
           <IconButton
-            iconName="funnel-outline"
+            iconName={isFilterActive ? "funnel" : "funnel-outline"}
             onPress={() => navigation.navigate("FilterExpenses")}
           >
-            Filter
+            {isFilterActive ? "Filter active" : "Filter"}
           </IconButton>
         </View>
         {!loading && sortedExpenses.length === 0 && (
