@@ -8,7 +8,6 @@ import {
   Roboto_500Medium,
   Roboto_700Bold,
 } from "@expo-google-fonts/roboto";
-import { useEffect } from "react";
 import Navigator from "./navigation/Navigator";
 import { ExpenseProvider } from "./context/ExpenseContext";
 
@@ -20,12 +19,6 @@ export default function App() {
     "Roboto-Medium": Roboto_500Medium,
     "Roboto-Bold": Roboto_700Bold,
   });
-
-  useEffect(() => {
-    if (fontsLoaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
 
   if (!fontsLoaded) {
     return null;

@@ -3,7 +3,6 @@ import { FC, useEffect, useState } from "react";
 import { FirebaseError } from "firebase/app";
 import { RegisterScreenProps } from "../types/navigation";
 import { useTheme } from "../context/ThemeContext";
-import { useAuth } from "../context/AuthContext";
 import { registerUser } from "../utils/auth";
 import { FormInputData } from "../types/form";
 import { DEFAULT_INPUT_DATA } from "../constants/form";
@@ -15,7 +14,6 @@ import FormContainer from "../components/auth/FormContainer";
 
 const RegisterScreen: FC<RegisterScreenProps> = ({ navigation }) => {
   const { theme } = useTheme();
-  const { setUser } = useAuth();
 
   const [nameData, setNameData] = useState<FormInputData<string>>(
     DEFAULT_INPUT_DATA
@@ -66,12 +64,7 @@ const RegisterScreen: FC<RegisterScreenProps> = ({ navigation }) => {
     if (isDataValid) {
       // Register user
       try {
-        const user = await registerUser(
-          nameData.value,
-          emailData.value,
-          passwordData.value
-        );
-        setUser(user);
+        await registerUser(nameData.value, emailData.value, passwordData.value);
       } catch (e) {
         // Firebase error is an object
         const error = e as FirebaseError;

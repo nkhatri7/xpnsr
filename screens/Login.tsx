@@ -3,7 +3,6 @@ import { Alert, View } from "react-native";
 import { FirebaseError } from "firebase/app";
 import { LoginScreenProps } from "../types/navigation";
 import { useTheme } from "../context/ThemeContext";
-import { useAuth } from "../context/AuthContext";
 import { FormInputData } from "../types/form";
 import { DEFAULT_INPUT_DATA } from "../constants/form";
 import { signInUser } from "../utils/auth";
@@ -15,7 +14,6 @@ import FormContainer from "../components/auth/FormContainer";
 
 const LoginScreen: FC<LoginScreenProps> = ({ navigation }) => {
   const { theme } = useTheme();
-  const { setUser } = useAuth();
 
   const [emailData, setEmailData] = useState<FormInputData<string>>(
     DEFAULT_INPUT_DATA
@@ -40,8 +38,7 @@ const LoginScreen: FC<LoginScreenProps> = ({ navigation }) => {
     const isDataValid = validateData();
     if (isDataValid) {
       try {
-        const user = await signInUser(emailData.value, passwordData.value);
-        setUser(user);
+        await signInUser(emailData.value, passwordData.value);
       } catch (e) {
         // Firebase error is an object
         const error = e as FirebaseError;
