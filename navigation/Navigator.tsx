@@ -1,8 +1,9 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { useAuth } from "../context/AuthContext";
 import { StatusBar } from "expo-status-bar";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import * as SplashScreen from "expo-splash-screen";
 import { RootStackParamList } from "../types/navigation";
 import RootTabs from "./RootTabs";
 import RegisterScreen from "../screens/Register";
@@ -14,7 +15,15 @@ import FilterExpensesScreen from "../screens/FilterExpenses";
 const Navigator: FC = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
   const { isDarkMode } = useTheme();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
+
+  // Show splash screen until auth state has loaded to prevent jumping from
+  // auth screen to home screen
+  useEffect(() => {
+    if (!loading) {
+      SplashScreen.hideAsync();
+    }
+  }, [loading]);
 
   return (
     <>

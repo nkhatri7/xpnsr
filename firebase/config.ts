@@ -4,7 +4,7 @@ import { FirebaseOptions, initializeApp } from "firebase/app";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { getReactNativePersistence, initializeAuth } from "firebase/auth";
-import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   FIREBASE_API_KEY,
   FIREBASE_PROJECT_ID,
@@ -27,5 +27,5 @@ const firebaseConfig: FirebaseOptions = {
 
 export const app = initializeApp(firebaseConfig);
 export const auth = initializeAuth(app, {
-  persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+  persistence: getReactNativePersistence(AsyncStorage),
 });
