@@ -1,8 +1,8 @@
 import { FC, useMemo } from "react";
 import { Pressable, StyleSheet } from "react-native";
-import { Theme } from "../../../constants/colours";
-import { useTheme } from "../../../context/ThemeContext";
-import Text from "../text/Text";
+import { Theme } from "../../../../constants/colours";
+import { useTheme } from "../../../../context/ThemeContext";
+import Text from "../../text/Text";
 
 interface Props {
   value: any;
@@ -22,7 +22,7 @@ const SelectItem: FC<Props> = ({ value, selectedValue, onPress }) => {
         pressed && styles.dropdownItemPressed,
       ]}
       android_ripple={{ color: theme.card }}
-      onPress={onPress.bind(this, value)}
+      onPress={() => onPress(value)}
     >
       <Text
         style={[

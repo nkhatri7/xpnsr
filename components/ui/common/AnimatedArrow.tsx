@@ -4,10 +4,10 @@ import { Animated, Easing } from "react-native";
 import { useTheme } from "../../../context/ThemeContext";
 
 interface Props {
-  isSelectOpen: boolean;
+  isOpen: boolean;
 }
 
-const SelectArrow: FC<Props> = ({ isSelectOpen }) => {
+const AnimatedArrow: FC<Props> = ({ isOpen }) => {
   const { theme } = useTheme();
 
   // Rotation animation for select trigger arrow
@@ -36,12 +36,12 @@ const SelectArrow: FC<Props> = ({ isSelectOpen }) => {
   };
 
   useEffect(() => {
-    if (isSelectOpen) {
+    if (isOpen) {
       rotateArrowUp();
     } else {
       rotateArrowDown();
     }
-  }, [isSelectOpen]);
+  }, [isOpen]);
 
   return (
     <Animated.View style={{ transform: [{ rotate }] }}>
@@ -54,4 +54,4 @@ const SelectArrow: FC<Props> = ({ isSelectOpen }) => {
   );
 };
 
-export default SelectArrow;
+export default AnimatedArrow;

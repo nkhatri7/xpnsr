@@ -11,6 +11,7 @@ import { useTheme } from "../../../context/ThemeContext";
 import Text from "../text/Text";
 
 interface Props {
+  secondary?: boolean;
   disabled?: boolean;
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
@@ -19,6 +20,7 @@ interface Props {
 
 const Button: FC<PropsWithChildren<Props>> = ({
   children,
+  secondary,
   disabled = false,
   onPress,
   style: customStyle,
@@ -31,7 +33,10 @@ const Button: FC<PropsWithChildren<Props>> = ({
     <Pressable
       style={({ pressed }) => [
         styles.button,
-        pressed && styles.buttonPressed,
+        secondary && styles.secondaryButton,
+        pressed && (
+          secondary ? styles.secondaryButtonPressed : styles.buttonPressed
+        ),
         customStyle,
         disabled && { opacity: 0.7 }
       ]}
@@ -39,7 +44,9 @@ const Button: FC<PropsWithChildren<Props>> = ({
       android_ripple={{ color: theme.primaryAlt }}
       disabled={disabled}
     >
-      <Text style={[styles.text, textStyle]}>{children}</Text>
+      <Text style={[styles.text, secondary && styles.secondaryText, textStyle]}>
+        {children}
+      </Text>
     </Pressable>
   );
 };
@@ -55,12 +62,21 @@ const styling = (theme: Theme) => StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  secondaryButton: {
+    backgroundColor: theme.secondary,
+  },
   buttonPressed: {
     backgroundColor: theme.primaryAlt
+  },
+  secondaryButtonPressed: {
+    backgroundColor: theme.secondaryAlt,
   },
   text: {
     fontFamily: "Roboto-Medium",
     color: "#FFF",
     fontSize: 16,
+  },
+  secondaryText: {
+    color: "#000",
   },
 });

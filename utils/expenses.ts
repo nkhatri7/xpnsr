@@ -12,6 +12,8 @@ import {
 import {
   Expense,
   ExpenseCategory,
+  ExpenseDateFilterOption,
+  ExpenseFilter,
   ExpenseSortOption,
   FirebaseExpense,
 } from "../types/expenses";
@@ -142,3 +144,94 @@ const sortMostExpensiveExpenses = (expenses: Expense[]): Expense[] => (
 const sortLeastExpensiveExpenses = (expenses: Expense[]): Expense[] => (
   [...expenses].sort((a, b) => a.amount - b.amount)
 );
+
+/**
+ * Filters the given expenses by the selected filters.
+ * @param expenses An array of {@link Expense} objects.
+ * @param filter An {@link ExpenseFilter} object with filters for categories
+ * and date.
+ * @returns A filtered array of expense objects based on the passed filter.
+ */
+export const filterExpenses = (
+  expenses: Expense[],
+  filter: ExpenseFilter
+): Expense[] => {
+  const categoryFilteredExpenses = filterExpensesByCategory(
+    expenses,
+    filter.categories
+  );
+  return filterExpensesByDate(categoryFilteredExpenses, filter.date);
+};
+
+/**
+ * Filters the given expenses by their categories. Checks if the expense
+ * category is in the selected filtered categories.
+ * @param expenses An array of {@link Expense} objects.
+ * @param categories The filtered categories.
+ * @returns A filtered array of expense objects based on the given categories.
+ */
+const filterExpensesByCategory = (
+  expenses: Expense[],
+  categories: ExpenseCategory[]
+): Expense[] => {
+  if (categories.length === 0) {
+    return expenses;
+  }
+  return [...expenses].filter((expense) => (
+    categories.includes(expense.category)
+  ));
+};
+
+/**
+ * Filters the given expenses by the given date filter.
+ * @param expenses An array of {@link Expense} objects.
+ * @param dateFilter A date filter.
+ * @returns A filtered array of expense objects based on the date filter.
+ */
+const filterExpensesByDate = (
+  expenses: Expense[],
+  dateFilter: ExpenseDateFilterOption
+): Expense[] => {
+  const expensesArray = [...expenses];
+  if (dateFilter === ExpenseDateFilterOption.TODAY) {
+    return expensesArray.filter((expense) => isToday(expense.date));
+  }
+  if (dateFilter === ExpenseDateFilterOption.PAST_WEEK) {
+    return expensesArray.filter((expense) => isPastWeek(expense.date));
+  }
+  if (dateFilter === ExpenseDateFilterOption.THIS_MONTH) {
+    return expensesArray.filter((expense) => isThisMonth(expense.date));
+  }
+  if (dateFilter === ExpenseDateFilterOption.THIS_YEAR) {
+    return expensesArray.filter((expense) => isThisYear(expense.date));
+  }
+  return expenses;
+};
+
+const isToday = (date: Date): boolean => {
+  const today = new Date();
+  return (
+    date.getFullYear() === today.getFullYear() &&
+    date.getMonth() === today.getMonth() &&
+    date.getDate() === today.getDate()
+  );
+};
+
+const isPastWeek = (date: Date): boolean => {
+  const today = new Date();
+  const oneDay = 24 * 60 * 60 * 1000;
+  const daysDifference = Math.floor(
+    (today.getTime() - date.getTime()) / oneDay
+  );
+  return daysDifference <= 7;
+};
+
+const isThisMonth = (date: Date): boolean => {
+  const today = new Date();
+  return isThisYear(date) && date.getMonth() === today.getMonth();
+};
+
+const isThisYear = (date: Date): boolean => {
+  const today = new Date();
+  return date.getFullYear() === today.getFullYear();
+};

@@ -8,6 +8,7 @@ export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabsParamList>;
   AddExpense: undefined;
   SortExpenses: undefined;
+  FilterExpenses: undefined;
 };
 
 export type RootTabsParamList = {
@@ -38,4 +39,9 @@ export type AddExpenseScreenProps = NativeStackScreenProps<
 export type SortExpensesScreenProps = NativeStackScreenProps<
   RootStackParamList,
   "SortExpenses"
+>;
+
+export type FilterExpensesScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  "FilterExpenses"
 >;

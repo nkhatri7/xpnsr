@@ -8,11 +8,11 @@ import {
   UIManager,
   View,
 } from "react-native";
-import { Theme } from "../../../constants/colours";
-import { useTheme } from "../../../context/ThemeContext";
-import SelectArrow from "./SelectArrow";
-import Text from "../text/Text";
+import { Theme } from "../../../../constants/colours";
+import { useTheme } from "../../../../context/ThemeContext";
+import AnimatedArrow from "../../common/AnimatedArrow";
 import SelectItem from "./SelectItem";
+import Text from "../../text/Text";
 
 interface Props {
   data: any[];
@@ -58,7 +58,7 @@ const Select: FC<Props> = ({
             isSelectOpen && { borderColor: theme.primary },
             errorMessage !== "" && { borderColor: theme.error },
           ]}
-          onPress={setSelectOpen.bind(this, (prev) => !prev)}
+          onPress={() => setSelectOpen((prev) => !prev)}
         >
           <Text
             style={[
@@ -68,7 +68,7 @@ const Select: FC<Props> = ({
           >
             {selectedValue ?? placeholder}
           </Text>
-          <SelectArrow isSelectOpen={isSelectOpen} />
+          <AnimatedArrow isOpen={isSelectOpen} />
         </Pressable>
         {isSelectOpen && (
           <ScrollView
