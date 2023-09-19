@@ -6,6 +6,7 @@ import { colourVariables } from "../constants/colours";
 import HomeScreen from "../screens/Home";
 import ExpensesScreen from "../screens/Expenses";
 import TabIcon from "../components/tabs/TabIcon";
+import SettingsScreen from "../screens/Settings";
 
 const RootTabs: FC = () => {
   const Tab = createBottomTabNavigator<RootTabsParamList>();
@@ -34,6 +35,13 @@ const RootTabs: FC = () => {
         component={ExpensesScreen}
         options={{
           tabBarIcon: ({ color }) => <TabIcon name="cash" color={color} />
+        }}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          tabBarIcon: ({ color }) => <TabIcon name="cog" color={color} />
         }}
       />
     </Tab.Navigator>
