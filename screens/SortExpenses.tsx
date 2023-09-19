@@ -3,9 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { useExpenses } from "../context/ExpenseContext";
 import { SortExpensesScreenProps } from "../types/navigation";
 import { ExpenseSortOption } from "../types/expenses";
-import ScrollScreenWrapper from "../components/ui/layout/ScrollScreenWrapper";
-import Heading from "../components/ui/text/Heading";
-import CloseButton from "../components/ui/common/CloseButton";
+import StackScreenWrapper from "../components/ui/layout/StackScreenWrapper";
 import ExpenseSortItem from "../components/expenses/ExpenseSortItem";
 import Button from "../components/ui/common/Button";
 
@@ -25,29 +23,23 @@ const SortExpensesScreen: FC<SortExpensesScreenProps> = ({ navigation }) => {
   };
 
   return (
-    <ScrollScreenWrapper>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Heading style={{ fontSize: 24 }}>Sort Expenses</Heading>
-          <CloseButton onPress={() => navigation.goBack()} />
+    <StackScreenWrapper title="Sort Expenses" scrollable={true}>
+      <View style={styles.mainContentContainer}>
+        <View>
+          {sortOptions.map((option, index) => (
+            <ExpenseSortItem
+              key={index}
+              sortOption={option}
+              isSelected={option === selectedOption}
+              onPress={() => setSelectedOption(option)}
+            />
+          ))}
         </View>
-        <View style={styles.mainContentContainer}>
-          <View>
-            {sortOptions.map((option, index) => (
-              <ExpenseSortItem
-                key={index}
-                sortOption={option}
-                isSelected={option === selectedOption}
-                onPress={() => setSelectedOption(option)}
-              />
-            ))}
-          </View>
-          <View>
-            <Button onPress={handleConfirm}>Confirm</Button>
-          </View>
+        <View>
+          <Button onPress={handleConfirm}>Confirm</Button>
         </View>
       </View>
-    </ScrollScreenWrapper>
+    </StackScreenWrapper>
   );
 };
 
