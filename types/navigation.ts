@@ -9,6 +9,7 @@ export type RootStackParamList = {
   AddExpense: undefined;
   SortExpenses: undefined;
   FilterExpenses: undefined;
+  EditProfile: undefined;
 };
 
 export type RootTabsParamList = {
@@ -50,4 +51,9 @@ export type FilterExpensesScreenProps = NativeStackScreenProps<
 export type SettingsScreenProps = BottomTabScreenProps<
   RootTabsParamList,
   "Settings"
+>;
+
+export type EditProfileScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  "EditProfile"
 >;

@@ -1,12 +1,15 @@
 import { FC, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { useAuth } from "../../context/AuthContext";
-import { Theme } from "../../constants/colours";
 import { useTheme } from "../../context/ThemeContext";
+import { RootStackParamList } from "../../types/navigation";
+import { Theme } from "../../constants/colours";
 import Text from "../ui/text/Text";
 import Link from "../ui/text/Link";
 
 const ProfilePreview: FC = () => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const { user } = useAuth();
   const { theme } = useTheme();
   const styles = useMemo(() => styling(theme), [theme]);
@@ -26,7 +29,12 @@ const ProfilePreview: FC = () => {
         <Text style={styles.name}>{user.displayName}</Text>
         <Text style={styles.email}>{user.email}</Text>
       </View>
-      <Link style={styles.editProfileLink}>Edit Profile</Link>
+      <Link
+        style={styles.editProfileLink}
+        onPress={() => navigation.navigate("EditProfile")}
+      >
+        Edit Profile
+      </Link>
     </View>
   );
 };

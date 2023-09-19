@@ -11,6 +11,7 @@ import LoginScreen from "../screens/Login";
 import AddExpenseScreen from "../screens/AddExpense";
 import SortExpensesScreen from "../screens/SortExpenses";
 import FilterExpensesScreen from "../screens/FilterExpenses";
+import EditProfileScreen from "../screens/EditProfile";
 
 const Navigator: FC = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -45,6 +46,11 @@ const Navigator: FC = () => {
             <Stack.Screen
               name="FilterExpenses"
               component={FilterExpensesScreen}
+              options={{ presentation: "fullScreenModal" }}
+            />
+            <Stack.Screen
+              name="EditProfile"
+              component={EditProfileScreen}
               options={{ presentation: "fullScreenModal" }}
             />
           </Stack.Group>
