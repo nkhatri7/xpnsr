@@ -93,6 +93,76 @@ export const getCategoryIconName = (
   return "help";
 };
 
+interface MonthlyStats {
+  spend: number;
+  categoryStats: CategoryStats[];
+}
+
+interface CategoryStats {
+  category: ExpenseCategory;
+  count: number;
+  totalSpend: number;
+}
+
+/**
+ * Gets expense stats for the current month.
+ * @param expenses An array of {@link Expense} objects.
+ * @returns A {@link MonthlyStats} object with the stats for the current month.
+ */
+export const getCurrentMonthStats = (expenses: Expense[]): MonthlyStats => {
+  const currentMonthExpenses = filterExpensesByDate(
+    expenses,
+    ExpenseDateFilterOption.THIS_MONTH
+  );
+  const totalSpend = expenses.reduce((accumulator, currentExpense) => {
+    return accumulator + currentExpense.amount;
+  }, 0);
+  const categoryStats = getCategoryStats(currentMonthExpenses);
+  return { spend: totalSpend, categoryStats };
+};
+
+type CategoryData = Record<ExpenseCategory, {
+  count: number,
+  totalSpend: number
+}>;
+
+/**
+ * Calculates the count and total spending for each category from the given
+ * expenses and sorts the categories by the highest total spend.
+ * @param expenses An array of {@link Expense} objects.
+ * @returns An array of {@link CategoryStats} objects sorted by total spend.
+ */
+export const getCategoryStats = (expenses: Expense[]): CategoryStats[] => {
+  // Initialise category data
+  const categoryData = {} as CategoryData;
+  Object.values(ExpenseCategory).forEach((category) => {
+    categoryData[category] = { count: 0, totalSpend: 0 };
+  });
+
+  // Loop through expenses and add count and total spend to categories
+  expenses.forEach((expense) => {
+    const { category, amount } = expense;
+    if (categoryData[category]) {
+      categoryData[category].count++;
+      categoryData[category].totalSpend += amount;
+    } else {
+      categoryData[category] = {
+        count: 1,
+        totalSpend: amount,
+      };
+    }
+  });
+
+  // Transform data into stats objects and sort by total spend
+  const categoryStats = Object.entries(categoryData)
+    .map(([category, data]) => ({
+      ...data,
+      category: category as unknown as ExpenseCategory,
+    }))
+    .sort((a, b) => b.totalSpend - a.totalSpend);
+  return categoryStats;
+};
+
 /**
  * Sorts the given expenses array by the given sort type.
  * @param expenses An array of {@link Expense} objects.
