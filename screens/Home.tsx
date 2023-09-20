@@ -2,12 +2,13 @@ import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { FC, useCallback, useEffect, useMemo } from "react";
 import { useAuth } from "../context/AuthContext";
 import { User } from "firebase/auth";
-import { Theme } from "../constants/colours";
+import { useExpenses } from "../context/ExpenseContext";
 import { useTheme } from "../context/ThemeContext";
+import { Theme } from "../constants/colours";
 import ScrollScreenWrapper from "../components/ui/layout/ScrollScreenWrapper";
 import Heading from "../components/ui/text/Heading";
 import MonthlyStats from "../components/home/MonthlyStats";
-import { useExpenses } from "../context/ExpenseContext";
+import RecentTrends from "../components/home/RecentTrends";
 
 const HomeScreen: FC = () => {
   const { user } = useAuth();
@@ -39,8 +40,7 @@ const HomeScreen: FC = () => {
               <MonthlyStats />
             </View>
             <View style={styles.statSummaryContainer}>
-              <Heading>Your top spending categories</Heading>
-              <View style={styles.placeholderCard}></View>
+              <RecentTrends />
             </View>
           </>
         )}

@@ -15,12 +15,18 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "iosStatusBar": {
+        "translucent": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#965FDC"
+      },
+      "androidStatusBar": {
+        "translucent": false
       }
     },
     "web": {

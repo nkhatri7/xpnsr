@@ -1,10 +1,10 @@
 import { FC, useEffect } from "react";
+import { StatusBar } from "react-native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useTheme } from "../context/ThemeContext";
 import { useAuth } from "../context/AuthContext";
-import { StatusBar } from "expo-status-bar";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import * as SplashScreen from "expo-splash-screen";
 import { RootStackParamList } from "../types/navigation";
+import * as SplashScreen from "expo-splash-screen";
 import RootTabs from "./RootTabs";
 import RegisterScreen from "../screens/Register";
 import LoginScreen from "../screens/Login";
@@ -15,7 +15,7 @@ import EditProfileScreen from "../screens/EditProfile";
 
 const Navigator: FC = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
-  const { isDarkMode } = useTheme();
+  const { isDarkMode, theme } = useTheme();
   const { isAuthenticated, loading } = useAuth();
 
   // Show splash screen until auth state has loaded to prevent jumping from
@@ -28,7 +28,10 @@ const Navigator: FC = () => {
 
   return (
     <>
-      <StatusBar style={isDarkMode ? "light" : "dark"} />
+      <StatusBar
+        barStyle={isDarkMode ? "light-content" : "dark-content"}
+        backgroundColor={theme.background}
+      />
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {isAuthenticated ? (
           <Stack.Group>
