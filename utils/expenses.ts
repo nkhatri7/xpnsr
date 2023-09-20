@@ -18,6 +18,7 @@ import {
   FirebaseExpense,
 } from "../types/expenses";
 import { Ionicons } from "@expo/vector-icons";
+import { MONTH_NAMES } from "./date";
 
 const database = getDatabase(app);
 const dbRef = ref(database, "expenses");
@@ -93,6 +94,126 @@ export const getCategoryIconName = (
   return "help";
 };
 
+interface MonthlyStats {
+  spend: number;
+  categoryStats: CategoryStats[];
+}
+
+interface RecentTrends {
+  spend: number;
+  monthlySpend: MonthSpend[];
+  categoryStats: CategoryStats[];
+}
+
+export interface MonthSpend {
+  month: string;
+  spend: number;
+}
+
+interface CategoryStats {
+  category: ExpenseCategory;
+  count: number;
+  totalSpend: number;
+}
+
+/**
+ * Gets expense stats for the current month.
+ * @param expenses An array of {@link Expense} objects.
+ * @returns A {@link MonthlyStats} object with the stats for the current month.
+ */
+export const getCurrentMonthStats = (expenses: Expense[]): MonthlyStats => {
+  const currentMonthExpenses = filterExpensesByDate(
+    expenses,
+    ExpenseDateFilterOption.THIS_MONTH
+  );
+  const totalSpend = currentMonthExpenses.reduce((
+    accumulator,
+    currentExpense
+  ) => {
+    return accumulator + currentExpense.amount;
+  }, 0);
+  const categoryStats = getCategoryStats(currentMonthExpenses);
+  return { spend: totalSpend, categoryStats };
+};
+
+export const getRecentTrends = (expenses: Expense[]): RecentTrends => {
+  // Get expenses from past 3 months
+  const recentExpenses = [...expenses].filter((expense) => (
+    isInPastThreeMonths(expense.date)
+  ));
+  const totalSpend = recentExpenses.reduce((accumulator, currentExpense) => {
+    return accumulator + currentExpense.amount;
+  }, 0);
+  const monthlySpend = getMonthlySpend(expenses);
+  const categoryStats = getCategoryStats(recentExpenses);
+  return { spend: totalSpend, monthlySpend, categoryStats };
+};
+
+const getMonthlySpend = (expenses: Expense[]): MonthSpend[] => {
+  // Initialise map with past 3 months as keys and 0 as default values
+  // This is done because we might not have any expenses from one of the months
+  // but we still want that month in the map so we have to initialise before
+  const monthlySpendMap = new Map<string, number>();
+  const today = new Date();
+  for (let i = today.getMonth() - 2; i <= today.getMonth(); i++) {
+    monthlySpendMap.set(MONTH_NAMES[i], 0);
+  }
+
+  // Iterate through expenses and update total spending
+  expenses.forEach((expense) => {
+    const month = MONTH_NAMES[expense.date.getMonth()];
+    const currentSpend = monthlySpendMap.get(month) || 0;
+    monthlySpendMap.set(month, currentSpend + expense.amount);
+  });
+
+  const monthlySpendArray = Array.from(monthlySpendMap, ([month, spend]) => {
+    return { month, spend };
+  });
+  return monthlySpendArray;
+};
+
+type CategoryData = Record<ExpenseCategory, {
+  count: number,
+  totalSpend: number
+}>;
+
+/**
+ * Calculates the count and total spending for each category from the given
+ * expenses and sorts the categories by the highest total spend.
+ * @param expenses An array of {@link Expense} objects.
+ * @returns An array of {@link CategoryStats} objects sorted by total spend.
+ */
+export const getCategoryStats = (expenses: Expense[]): CategoryStats[] => {
+  // Initialise category data
+  const categoryData = {} as CategoryData;
+  Object.values(ExpenseCategory).forEach((category) => {
+    categoryData[category] = { count: 0, totalSpend: 0 };
+  });
+
+  // Loop through expenses and add count and total spend to categories
+  expenses.forEach((expense) => {
+    const { category, amount } = expense;
+    if (categoryData[category]) {
+      categoryData[category].count++;
+      categoryData[category].totalSpend += amount;
+    } else {
+      categoryData[category] = {
+        count: 1,
+        totalSpend: amount,
+      };
+    }
+  });
+
+  // Transform data into stats objects and sort by total spend
+  const categoryStats = Object.entries(categoryData)
+    .map(([category, data]) => ({
+      ...data,
+      category: category as unknown as ExpenseCategory,
+    }))
+    .sort((a, b) => b.totalSpend - a.totalSpend);
+  return categoryStats;
+};
+
 /**
  * Sorts the given expenses array by the given sort type.
  * @param expenses An array of {@link Expense} objects.
@@ -103,19 +224,25 @@ export const sortExpenses = (
   expenses: Expense[],
   sortOption: ExpenseSortOption
 ): Expense[] => {
-  if (sortOption === ExpenseSortOption.MOST_RECENT) {
+  if (sortOption === ExpenseSortOption.OLDEST) {
+    return sortOldestExpenses(expenses);
+  } else if (sortOption === ExpenseSortOption.AMOUNT_HIGH_TO_LOW) {
+    return sortMostExpensiveExpenses(expenses);
+  } else if (sortOption === ExpenseSortOption.AMOUNT_LOW_TO_HIGH) {
+    return sortLeastExpensiveExpenses(expenses);
+  } else {
     return sortMostRecentExpenses(expenses);
   }
-  if (sortOption === ExpenseSortOption.AMOUNT_HIGH_TO_LOW) {
-    return sortMostExpensiveExpenses(expenses);
-  }
-  if (sortOption === ExpenseSortOption.AMOUNT_LOW_TO_HIGH) {
-    return sortLeastExpensiveExpenses(expenses);
-  }
-  // Expenses to be passed in will be default expenses with no sorting
-  // It is ordered by oldest by default
-  return expenses;
 };
+
+/**
+ * Sorts the given expenses array by the oldest expenses.
+ * @param expenses An array of {@link Expense} objects.
+ * @returns An array of expense objects with the oldest ones first.
+ */
+const sortOldestExpenses = (expenses: Expense[]): Expense[] => (
+  [...expenses].sort((a, b) => a.date.getTime() - b.date.getTime())
+);
 
 /**
  * Sorts the given expenses array by the most recent expenses.
@@ -124,7 +251,7 @@ export const sortExpenses = (
  */
 const sortMostRecentExpenses = (expenses: Expense[]): Expense[] => (
   // Can use reverse as by default it is the oldest expenses first
-  [...expenses].reverse()
+  [...expenses].sort((a, b) => b.date.getTime() - a.date.getTime())
 );
 
 /**
@@ -234,4 +361,12 @@ const isThisMonth = (date: Date): boolean => {
 const isThisYear = (date: Date): boolean => {
   const today = new Date();
   return date.getFullYear() === today.getFullYear();
+};
+
+const isInPastThreeMonths = (date: Date): boolean => {
+  const today = new Date();
+  const filterStartDate = new Date();
+  filterStartDate.setMonth(today.getMonth() - 3);
+  filterStartDate.setDate(1);
+  return date >= filterStartDate;
 };
