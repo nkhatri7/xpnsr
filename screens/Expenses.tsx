@@ -112,7 +112,7 @@ export default ExpensesScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    paddingHorizontal: 20,
     paddingTop: 50,
   },
   header: {
@@ -126,6 +126,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     alignItems: "center",
     gap: 10,
+    paddingBottom: 20,
   },
   noExpensesContainer: {
     flex: 1,
@@ -141,7 +142,7 @@ const styles = StyleSheet.create({
   expenseListContainer: {
     width: "100%",
     alignItems: "stretch",
-    marginTop: 30,
+    marginTop: 10,
     rowGap: 8,
   },
 });
